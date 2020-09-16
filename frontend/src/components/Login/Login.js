@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import cookie from "react-cookies";
 
@@ -24,10 +25,16 @@ export class Login extends Component {
     //handle submit
     handleSubmit = sub => {
         sub.preventDefault();
-
+        var backend_path = '';
+        if ( this.state.type === 'users' ) {
+            backend_path = '/users/login'
+        } else if ( this.state.type === 'restaurants' ) {
+            backend_path = '/restaurants/login'
+        }
         console.log( this.state );
+        console.log( this.backend_url + backend_path )
         axios
-            .post( this.backend_url + '/user/login', this.state )
+            .post( this.backend_url + backend_path, this.state )
             .then( ( response ) => {
                 if ( response.status === 200 ) {
                     this.setState( {
@@ -53,7 +60,16 @@ export class Login extends Component {
                         httpOnly: false,
                         maxAge: 90000
                     } )
-                    window.location.load( '/home' );
+                    cookie.save( "type", this.state.type, {
+                        path: '/',
+                        httpOnly: false,
+                        maxAge: 90000
+                    } )
+                    if ( this.state.type === 'users' ) {
+                        window.location.assign( '/users/dashboard' );
+                    } else if ( this.state.type === 'restaurants' ) {
+                        window.location.assign( '/restaurants/dashboard' );
+                    }
                 }
             } )
             .catch( ( err ) => {
@@ -75,34 +91,49 @@ export class Login extends Component {
     }
     render () {
 
-        if ( cookie.load( 'auth' ) ) {
+        if ( cookie.load( 'auth' ) && cookie.load( 'type' ) === 'users' ) {
             return <Redirect to='/home' />
+        }
+        else if ( cookie.load( 'auth' ) && cookie.load( 'type' ) === 'restaurants' ) {
+            return <Redirect to='/restautants/dashboard' />
         }
         return (
             <div>
                 { this.renderError() }
-                <form onSubmit={ this.handleSubmit } id="Login">
-                    <div className="role" onChange={ this.handleInputChange }>
-                        <input type="radio" id='radio-b1' name="type" value='users'
-                        />
-                        <label>User</label>
-                        <input type="radio" id='radio-b2' name="type" value='restaurants'
-                        />
-                        <label>Restaurant</label>
-                    </div>
+                <div className="container" style={ { height: "100vh" } }>
+                    <div className="h-100">
+                        <div className="h-25">
+                        </div>
+                        <div className="h-75">
+                            <div className="col-4">
+                                <form onSubmit={ this.handleSubmit } id="Login">
+                                    <div className="role" onChange={ this.handleInputChange }>
+                                        <input type="radio" id='radio-b1' name="type" value='users'
+                                        />
+                                        <label>User</label>
+                                        <input type="radio" id='radio-b2' name="type" value='restaurants'
+                                        />
+                                        <label>Restaurant</label>
+                                    </div>
 
-                    <div className="form-group">
-                        <input type="text" className="form-control" name="email" required
-                            placeholder="Enter Email" onChange={ this.handleInputChange } />
+                                    <div className="form-group">
+                                        <input type="text" className="form-control" name="email" required
+                                            placeholder="Enter Email" onChange={ this.handleInputChange } />
 
-                    </div>
-                    <div className="form-group">
-                        <input type="password" className="form-control" name="password" required
-                            placeholder="Enter Password" onChange={ this.handleInputChange } />
-                    </div>
-                    <button type="submit" className="btn btn-primary" onSubmit={ this.handleSubmit }>Login</button>
+                                    </div>
+                                    <div className="form-group">
+                                        <input type="password" className="form-control" name="password" required
+                                            placeholder="Enter Password" onChange={ this.handleInputChange } />
+                                    </div>
+                                    <button type="submit" className="btn btn-primary" onSubmit={ this.handleSubmit }>Login</button>
 
-                </form>
+                                </form>
+                                <br></br>
+                                Don't have an account? { <Link to="/signup">Sign Up</Link> }
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

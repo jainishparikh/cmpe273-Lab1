@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 export class Signup extends Component {
     constructor( props ) {
         super( props );
@@ -9,6 +10,7 @@ export class Signup extends Component {
             name: '',
             email: '',
             password: '',
+            address: '',
             error: false
         }
     }
@@ -26,12 +28,12 @@ export class Signup extends Component {
 
         console.log( this.state );
 
-        if ( this.state.type === 'user' ) {
+        if ( this.state.type === 'users' ) {
             axios
-                .post( this.backend_url + '/user/signup', this.state )
+                .post( this.backend_url + '/users/signup', this.state )
                 .then( ( response ) => {
                     if ( response.status === 200 ) {
-                        window.location.load( '/login' )
+                        window.location.assign( '/login' )
                     }
 
                 } )
@@ -41,16 +43,18 @@ export class Signup extends Component {
                     } )
 
                 } );
-        } else if ( this.state.type === 'restaurant' ) {
+        } else if ( this.state.type === 'restaurants' ) {
             axios
-                .post( this.backend_url + '/restaurant/signup', this.state )
+                .post( this.backend_url + '/restaurants/signup', this.state )
                 .then( ( response ) => {
+                    console.log( response )
                     if ( response.status === 200 ) {
-                        window.location.load( '/login' )
+                        console.log( "redirecting to login" )
+                        window.location.assign( '/login' )
                     }
 
-                } )
-                .catch( ( err ) => {
+                } ).catch( ( err ) => {
+                    console.log( "inside restaurant error" )
                     this.setState( {
                         error: true
                     } )
@@ -74,37 +78,48 @@ export class Signup extends Component {
         return (
             <div>
                 { this.renderError() }
-                <form onSubmit={ this.handleSubmit } id="Signup">
-                    <div className="role" >
-                        <input type="radio" id='radio-b1' name="type" value='users' onChange={ this.handleInputChange }
-                        />
-                        <label>User</label>
-                        <input type="radio" id='radio-b2' name="type" value='restaurants' onChange={ this.handleInputChange }
-                        />
-                        <label>Restaurant</label>
+                <div className="container" style={ { height: "100vh" } }>
+                    <div className="h-100">
+                        <div className="h-25"></div>
+                        <div className="h-75">
+                            <div className="col-5">
+                                <form onSubmit={ this.handleSubmit } id="Signup">
+                                    <div className="role" >
+                                        <input type="radio" id='radio-b1' name="type" value='users' onChange={ this.handleInputChange }
+                                        />
+                                        <label>User</label>
+                                        <input type="radio" id='radio-b2' name="type" value='restaurants' onChange={ this.handleInputChange }
+                                        />
+                                        <label>Restaurant</label>
 
-                    </div>
+                                    </div>
 
-                    <div className="form-group">
-                        <input type="text" className="form-control" name="name" autoFocus required
-                            placeholder="Enter Name" onChange={ this.handleInputChange } />
+                                    <div className="form-group">
+                                        <input type="text" className="form-control" name="name" autoFocus required
+                                            placeholder="Enter Name" onChange={ this.handleInputChange } />
 
-                    </div>
-                    <div className="form-group">
-                        <input type="text" className="form-control" name="email" required
-                            placeholder="Enter Email" onChange={ this.handleInputChange } />
+                                    </div>
+                                    <div className="form-group">
+                                        <input type="text" className="form-control" name="email" required
+                                            placeholder="Enter Email" onChange={ this.handleInputChange } />
 
+                                    </div>
+                                    <div className="form-group">
+                                        <input type="password" className="form-control" name="password" required
+                                            placeholder="Enter Password" onChange={ this.handleInputChange } />
+                                    </div>
+                                    <div className="form-group">
+                                        { this.state.type === 'restaurants' ? <input type="text" className="form-control" name="address" required
+                                            placeholder="Enter location" onChange={ this.handleInputChange } /> : undefined }
+                                    </div>
+                                    <button type="submit" className="btn btn-primary" onSubmit={ this.handleSubmit }>Sign Up</button>
+                                </form>
+                                <br></br>
+                                Already have an account? { <Link to="/login">Login</Link> }
+                            </div>
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <input type="password" className="form-control" name="password" required
-                            placeholder="Enter Password" onChange={ this.handleInputChange } />
-                    </div>
-                    <div className="form-group">
-                        { this.state.type === 'restaurants' ? <input type="text" className="form-control" name="location" required
-                            placeholder="Enter location" onChange={ this.handleInputChange } /> : undefined }
-                    </div>
-                    <button type="submit" className="btn btn-primary" onSubmit={ this.handleSubmit }>Sign Up</button>
-                </form>
+                </div>
             </div>
         )
     }

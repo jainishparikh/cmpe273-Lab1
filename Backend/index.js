@@ -33,8 +33,8 @@ app.use(
 //APIs
 
 //routes
-app.use( '/user', user );
-app.use( '/restaurant', restaurant );
+app.use( '/users', user );
+app.use( '/restaurants', restaurant );
 
 
 //get index page

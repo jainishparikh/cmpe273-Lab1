@@ -9,7 +9,7 @@ export class Home extends Component {
         return (
 
             <div>
-                Welcome to Home!!
+                User Home!!
             </div>
         )
     }

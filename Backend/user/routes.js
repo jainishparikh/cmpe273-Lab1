@@ -41,7 +41,7 @@ router.post( '/login', ( req, res ) => {
     var type = req.body.type
 
 
-    var sql = `select id,name,email,password from ${ type } where email="${ email }"`;
+    var sql = `select userID,name,email,password from ${ type } where email="${ email }"`;
 
     connection.query( sql, ( err, results ) => {
         if ( err ) {
@@ -51,7 +51,7 @@ router.post( '/login', ( req, res ) => {
                 if ( bcrypt.compareSync( password, results[ 0 ].password ) ) {
                     console.log( results[ 0 ] )
                     userdata = {
-                        id: results[ 0 ].id,
+                        id: results[ 0 ].userID,
                         name: results[ 0 ].name,
                         email: results[ 0 ].email
                     }
