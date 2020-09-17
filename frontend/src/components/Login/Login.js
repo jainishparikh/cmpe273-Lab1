@@ -102,9 +102,9 @@ export class Login extends Component {
                 { this.renderError() }
                 <div className="container" style={ { height: "100vh" } }>
                     <div className="h-100">
-                        <div className="h-25">
+                        <div className="upper" style={ { height: "30%" } }>
                         </div>
-                        <div className="h-75">
+                        <div className="lower" style={ { height: "70%" } }>
                             <div className="col-4">
                                 <form onSubmit={ this.handleSubmit } id="Login">
                                     <div className="role" onChange={ this.handleInputChange }>

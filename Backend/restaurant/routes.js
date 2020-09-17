@@ -70,8 +70,8 @@ router.post( '/login', ( req, res ) => {
 
 
 //get about
-router.get( '/about', ( req, res ) => {
-    var email = req.body.email;
+router.get( '/about/:email', ( req, res ) => {
+    var email = req.params.email;
     var sql = `select * from restaurants where email="${ email }"`;
     connection.query( sql, ( err, results ) => {
         if ( err ) {

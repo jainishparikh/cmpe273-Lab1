@@ -69,30 +69,56 @@ router.post( '/login', ( req, res ) => {
 
 } );
 
+//get user about
+router.get( '/about/:email', ( req, res ) => {
+    var email = req.params.email;
+    console.log( req.body )
+    var sql = `select * from users where email="${ email }"`;
+    connection.query( sql, ( err, results ) => {
+        if ( err ) {
+            console.log( err );
+            res.end( "Error:", err );
+        } else {
+            var data = {}
+            console.log( results[ 0 ] )
+            Object.keys( results[ 0 ] ).forEach( ( key ) => {
+                if ( key != "password" ) {
+                    data[ key ] = results[ 0 ][ key ]
+                }
+            } )
+            res.status( 200 ).send( JSON.stringify( data ) );
+        }
 
-// //about
-// router.post( '/about/:email', ( req, res ) => {
-//     var email = req.params.email
+    } );
+} );
 
-//     var sql = `update users set `;
-//     Object.keys( req.body ).forEach( key => {
-//         if ( req.body[ key ] != '' && key != 'radio' && key != 'password' ) {
-//             // values[ key ] = req.body[ key ];
-//             sql += key + '=' + req.body[ key ] + ',';
-//         }
-//     } )
-//     sql = sql.slice( 0, -1 );
-//     sql += ` where email=${ email }`;
-//     // var values = [ email = new_email, nickName = nickName, contactNumber = contactNumber, dateOfBirth = dateOfBirth, city = city, state = state, country = country, headline = headline, yelpingSince = yelpingSince ]
-//     connection.query( sql, ( err, results ) => {
-//         if ( err ) {
-//             console.log( err );
-//             res.end( "Error:", err );
-//         } else {
-//             res.status( 200 ).end( "Update Successfull" );
-//         }
+//update users about
+router.put( '/about', ( req, res ) => {
+    var userID = req.body.userID;
+    var name = req.body.name;
+    var nickName = req.body.nickName;
+    var email = req.body.email;
+    var contactNumber = req.body.contactNumber;
+    var dateOfBirth = req.body.dateOfBirth;
+    var city = req.body.city;
+    var state = req.body.state;
+    var country = req.body.country;
+    var headline = req.body.headline;
+    var yelpingSince = req.body.yelpingSince;
+    var thingsILove = req.body.thingsILove;
+    var blogLink = req.body.blogLink;
 
-//     } );
-// } );
+    var sql = `update users set email=?,name=?,nickName=?,city=?,state=?,country=?,dateOfBirth=?,contactNumber=?,headline=?,yelpingSince=?,thingsILove=?,blogLink=? where userID=${ userID }`;
+    var values = [ email, name, nickName, city, state, country, dateOfBirth, contactNumber, headline, yelpingSince, thingsILove, blogLink ]
+    connection.query( sql, values, ( err, results ) => {
+        if ( err ) {
+            console.log( err );
+            res.status( 400 ).end( "Error:", err );
+        } else {
+            res.status( 200 ).send( JSON.stringify( results ) );
+        }
+
+    } );
+} );
 
 module.exports = router;

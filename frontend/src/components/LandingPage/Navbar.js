@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import cookie from 'react-cookies';
 import yelplogo from '../../images/yelp.png'
@@ -19,13 +18,16 @@ export class Navbar extends Component {
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav ml-auto" >
                                 <li class="nav-item">
+                                    <Link class="nav-link" to="" style={ { color: 'white' } }>Dashboard</Link>
+                                </li>
+                                <li class="nav-item">
                                     <Link class="nav-link" to="" style={ { color: 'white' } }>Orders</Link>
                                 </li>
                                 <li class="nav-item">
                                     <Link class="nav-link" to="" style={ { color: 'white' } }>Events</Link>
                                 </li>
                                 <li class="nav-item">
-                                    <Link class="nav-link" to="" style={ { color: 'white' } }>About</Link>
+                                    <Link class="nav-link" to="/users/about" style={ { color: 'white' } }>About</Link>
                                 </li>
                                 <li class="nav-item">
                                     <Link class="nav-link" to="/logout" style={ { color: 'white' } }>Logout</Link>
@@ -57,7 +59,7 @@ export class Navbar extends Component {
                                     <Link class="nav-link" to="" style={ { color: 'white' } }>Events</Link>
                                 </li>
                                 <li class="nav-item">
-                                    <Link class="nav-link" to="" style={ { color: 'white' } }>About</Link>
+                                    <Link class="nav-link" to="/restaurants/about" style={ { color: 'white' } }>About</Link>
                                 </li>
                                 <li class="nav-item">
                                     <Link class="nav-link" to="/logout" style={ { color: 'white' } }>Logout</Link>

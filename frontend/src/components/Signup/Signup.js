@@ -80,8 +80,8 @@ export class Signup extends Component {
                 { this.renderError() }
                 <div className="container" style={ { height: "100vh" } }>
                     <div className="h-100">
-                        <div className="h-25"></div>
-                        <div className="h-75">
+                        <div className="upper" style={ { height: "30%" } }></div>
+                        <div className="lower" style={ { height: "70%" } }>
                             <div className="col-5">
                                 <form onSubmit={ this.handleSubmit } id="Signup">
                                     <div className="role" >
