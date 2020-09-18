@@ -110,17 +110,19 @@ router.put( '/about', ( req, res ) => {
 
 
 //get dishes
-router.get( '/dishes', ( req, res ) => {
-    var restaurantID = req.body.restaurantID;
+router.get( '/dishes/:restaurantID', ( req, res ) => {
+    var restaurantID = req.params.restaurantID;
     var sql = `select * from dishes where FK_dishes_restaurants="${ restaurantID }"`;
     connection.query( sql, ( err, results ) => {
         if ( err ) {
             console.log( err );
             res.end( "Error:", err );
         } else {
-            // Object.keys(results).forEach((dish)=>{
-
-            // })
+            // var out = []
+            // Object.keys( results ).forEach( ( dish ) => {
+            //     out.push( JSON.stringify( results[ dish ] ) )
+            // } )
+            console.log( JSON.stringify( results ) )
             res.status( 200 ).send( JSON.stringify( results ) );
         }
 
@@ -131,10 +133,10 @@ router.get( '/dishes', ( req, res ) => {
 router.post( '/dishes', ( req, res ) => {
     var restaurantID = req.body.restaurantID;
     var name = req.body.dishName;
-    var ingrediants = req.body.ingrediants;
-    var price = req.body.price;
-    var description = req.body.description;
-    var category = req.body.category;
+    var ingrediants = req.body.dishIngrediants;
+    var price = req.body.dishPrice;
+    var description = req.body.dishDescription;
+    var category = req.body.dishCategory;
 
     var sql = `insert into dishes(FK_dishes_restaurants,dishName, dishIngrediants,dishPrice,dishDescription,dishCategory) values(?,?,?,?,?,?)`;
     var values = [ restaurantID, name, ingrediants, price, description, category ]

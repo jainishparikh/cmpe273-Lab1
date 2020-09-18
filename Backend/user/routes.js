@@ -3,6 +3,7 @@ var bcrypt = require( 'bcrypt' );
 var router = express.Router();
 var connection = require( '../config/db_config' ).connection;
 
+
 //signup
 router.post( '/signup', ( req, res ) => {
 
@@ -69,6 +70,7 @@ router.post( '/login', ( req, res ) => {
 
 } );
 
+//About
 //get user about
 router.get( '/about/:email', ( req, res ) => {
     var email = req.params.email;
@@ -121,4 +123,30 @@ router.put( '/about', ( req, res ) => {
     } );
 } );
 
+
+//upload profile pic
+
+router.post( '/uploadpicture', ( req, res ) => {
+    let upload = req.app.get( 'upload' );
+    upload( req, res, err => {
+        if ( err ) {
+            console.log( "Error uploading image", err );
+            res.status( 400 ).end( 'Issue with uploading' )
+        } else {
+            console.log( "Inside upload", req.file, req.body );
+            var userID = req.body.userID;
+            var sql = `update users set profilePicture='${ req.file.filename }' where userID=${ userID }`;
+            connection.query( sql, ( err, results ) => {
+                if ( err ) {
+                    console.log( err );
+                    res.status( 400 ).end( "Error:", err );
+                } else {
+                    res.status( 200 ).send( JSON.stringify( results ) );
+                }
+
+            } );
+
+        }
+    } )
+} );
 module.exports = router;
