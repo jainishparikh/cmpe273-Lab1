@@ -130,35 +130,103 @@ router.get( '/dishes/:restaurantID', ( req, res ) => {
 } );
 
 //add dishes
+// router.post( '/dishes', ( req, res ) => {
+//     var restaurantID = req.body.restaurantID;
+//     var name = req.body.dishName;
+//     var ingrediants = req.body.dishIngrediants;
+//     var price = req.body.dishPrice;
+//     var description = req.body.dishDescription;
+//     var category = req.body.dishCategory;
+
+//     var sql = `insert into dishes(FK_dishes_restaurants,dishName, dishIngrediants,dishPrice,dishDescription,dishCategory) values(?,?,?,?,?,?)`;
+//     var values = [ restaurantID, name, ingrediants, price, description, category ]
+//     connection.query( sql, values, ( err, results ) => {
+//         if ( err ) {
+//             console.log( err );
+//             res.end( "Error:", err );
+//         } else {
+//             console.log( results.insertId )
+//             res.status( 200 ).send( JSON.stringify( results ) );
+//         }
+
+//     } );
+// } );
+
+//add dish
 router.post( '/dishes', ( req, res ) => {
-    var restaurantID = req.body.restaurantID;
+    let upload = req.app.get( 'upload_dishImage' );
+    upload( req, res, err => {
+        if ( err ) {
+            console.log( "Error uploading Dish image", err );
+            res.status( 400 ).end( 'Issue with Dish image uploading' )
+        } else {
+
+            var restaurantID = req.body.restaurantID;
+            var name = req.body.dishName;
+            var ingrediants = req.body.dishIngrediants;
+            var price = req.body.dishPrice;
+            var description = req.body.dishDescription;
+            var category = req.body.dishCategory;
+            var imageName = req.file.filename;
+
+
+            var sql = `insert into dishes(FK_dishes_restaurants,dishName, dishIngrediants,dishPrice,dishDescription,dishCategory,dishPicture) values(?,?,?,?,?,?,?)`;
+            var values = [ restaurantID, name, ingrediants, price, description, category, imageName ]
+            connection.query( sql, values, ( err, results ) => {
+                if ( err ) {
+                    console.log( err );
+                    res.end( "Error:", err );
+                } else {
+                    console.log( results.insertId )
+                    res.status( 200 ).send( JSON.stringify( results ) );
+                }
+
+            } );
+        }
+    } )
+} );
+
+
+//update dish with image
+router.put( '/dishes/withimage', ( req, res ) => {
+    let upload = req.app.get( 'upload_dishImage' );
+    upload( req, res, err => {
+        if ( err ) {
+            console.log( "Error uploading Dish image", err );
+            res.status( 400 ).end( 'Issue with Dish image uploading' )
+        } else {
+            var dishID = req.body.dishID;
+            var name = req.body.dishName;
+            var ingrediants = req.body.dishIngrediants;
+            var price = req.body.dishPrice;
+            var description = req.body.dishDescription;
+            var category = req.body.dishCategory;
+            var imageName = req.file.filename;
+
+            var sql = `UPDATE dishes SET dishName=? , dishIngrediants=? ,dishPrice=? ,dishDescription=?, dishCategory=?, dishPicture=? where dishID=${ dishID }`;
+            var values = [ name, ingrediants, price, description, category, imageName ]
+            connection.query( sql, values, ( err, results ) => {
+                if ( err ) {
+                    console.log( err );
+                    res.end( "Error:", err );
+                } else {
+                    res.status( 200 ).send( JSON.stringify( results ) );
+                }
+
+            } );
+        }
+    } );
+} );
+
+//update dish without image
+router.put( '/dishes/withoutimage', ( req, res ) => {
+    console.log( req.body )
+    var dishID = req.body.dishID;
     var name = req.body.dishName;
     var ingrediants = req.body.dishIngrediants;
     var price = req.body.dishPrice;
     var description = req.body.dishDescription;
     var category = req.body.dishCategory;
-
-    var sql = `insert into dishes(FK_dishes_restaurants,dishName, dishIngrediants,dishPrice,dishDescription,dishCategory) values(?,?,?,?,?,?)`;
-    var values = [ restaurantID, name, ingrediants, price, description, category ]
-    connection.query( sql, values, ( err, results ) => {
-        if ( err ) {
-            console.log( err );
-            res.end( "Error:", err );
-        } else {
-            res.status( 200 ).send( JSON.stringify( results ) );
-        }
-
-    } );
-} );
-
-//update dish
-router.put( '/dishes', ( req, res ) => {
-    var dishID = req.body.dishID;
-    var name = req.body.dishName;
-    var ingrediants = req.body.ingrediants;
-    var price = req.body.price;
-    var description = req.body.description;
-    var category = req.body.category;
 
     var sql = `UPDATE dishes SET dishName=? , dishIngrediants=? ,dishPrice=? ,dishDescription=?, dishCategory=? where dishID=${ dishID }`;
     var values = [ name, ingrediants, price, description, category ]
@@ -173,5 +241,31 @@ router.put( '/dishes', ( req, res ) => {
     } );
 } );
 
+//upload dish pic
+
+router.post( '/uploadpicture', ( req, res ) => {
+    let upload = req.app.get( 'upload_dishImage' );
+    upload( req, res, err => {
+        if ( err ) {
+            console.log( "Error uploading Dish image", err );
+            res.status( 400 ).end( 'Issue with Dish image uploading' )
+        } else {
+            console.log( "Inside upload", req.file, req.body );
+            var dishID = req.body.dishID;
+            // var restaurantID = req.body.restaurantID;
+            var sql = `update dishes set dishPicture='${ req.file.filename }' where dishID=${ dishID }`;
+            connection.query( sql, ( err, results ) => {
+                if ( err ) {
+                    console.log( err );
+                    res.status( 400 ).end( "Error:", err );
+                } else {
+                    res.status( 200 ).send( JSON.stringify( results ) );
+                }
+
+            } );
+
+        }
+    } )
+} );
 
 module.exports = router;

@@ -33,7 +33,8 @@ app.use(
 );
 
 //image storage
-const storage = multer.diskStorage( {
+//profile picture
+const profileImage_storage = multer.diskStorage( {
     destination: './public/images/profilepics/',
     filename: function ( req, file, cb ) {
         cb(
@@ -43,11 +44,28 @@ const storage = multer.diskStorage( {
     }
 } )
 
-const upload = multer( {
-    storage: storage
+const upload_profileImage = multer( {
+    storage: profileImage_storage
 } ).single( 'myImage' )
 
-app.set( "upload", upload );
+app.set( "upload_profileImage", upload_profileImage );
+
+//dish images
+const dishImage_storage = multer.diskStorage( {
+    destination: './public/images/dishes/',
+    filename: function ( req, file, cb ) {
+        cb(
+            null,
+            file.fieldname + '_' + Date.now() + path.extname( file.originalname )
+        )
+    }
+} )
+
+const upload_dishImage = multer( {
+    storage: dishImage_storage
+} ).single( 'myImage' )
+
+app.set( "upload_dishImage", upload_dishImage );
 
 //APIs
 

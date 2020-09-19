@@ -127,7 +127,7 @@ router.put( '/about', ( req, res ) => {
 //upload profile pic
 
 router.post( '/uploadpicture', ( req, res ) => {
-    let upload = req.app.get( 'upload' );
+    let upload = req.app.get( 'upload_profileImage' );
     upload( req, res, err => {
         if ( err ) {
             console.log( "Error uploading image", err );
@@ -149,4 +149,5 @@ router.post( '/uploadpicture', ( req, res ) => {
         }
     } )
 } );
+
 module.exports = router;

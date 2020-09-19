@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom'
 import cookie from 'react-cookies';
-import ReactModal from 'react-modal'
+import Modal from 'react-modal';
 import axios from 'axios';
 import AddDish from './AddDishes';
 import GetDishes from './GetDishes'
@@ -92,41 +92,29 @@ export class RestaurantAbout extends Component {
                                 } }>Edit Profile</Link>
                             </div>
                         </div>
-                        <div className="col-5">
+                        <div className="col-9">
+                            {/* Add dish */ }
                             <div className="row mb-3">
 
                                 <div className="add-dish m-2" >
                                     <button className="btn btn-primary" onClick={ this.toggleDishPopUp }>Add Dish</button>
                                 </div>
                                 {/* using react-modal for popup to add dish */ }
-                                <ReactModal isOpen={ this.state.dishPopUp } style={ {
-                                    top: '50%',
-                                    left: '50%',
-                                    right: 'auto',
-                                    bottom: 'auto',
-                                    marginRight: '-50%',
-                                    transform: 'translate(-50%, -50%)'
-                                } }  >
-                                    <AddDish addDish="true" closePopUp={ this.toggleDishPopUp } />
-                                </ReactModal>
+                                <Modal isOpen={ this.state.dishPopUp }  >
+                                    <AddDish call="add" closePopUp={ this.toggleDishPopUp } />
+                                </Modal>
 
-
-                                <div className="edit-dish m-2" >
-                                    <button className="btn btn-primary" onClick={ this.toggleDishPopUp }>Edit Dish</button>
-                                </div>
-                                <ReactModal isOpen={ this.state.dishPopUp } >
-                                    <AddDish addDish="false" closePopUp={ this.toggleDishPopUp } />
-                                </ReactModal>
 
 
                             </div>
+                            {/* Display dishes */ }
                             <div className="row">
                                 <div className="dishes">
                                     <GetDishes />
                                 </div>
                             </div>
                         </div>
-                        <div className="col-4">Reviews</div>
+
                     </div>
                 </div>
 

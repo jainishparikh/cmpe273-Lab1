@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router';
-//import { Link } from 'react-router-dom';
 import cookie from 'react-cookies';
 import axios from 'axios';
+import IndividualDish from './IndividualDish'
 
 export class GetDishes extends Component {
     constructor( props ) {
         super( props )
         this.backend_url = "http://localhost:3001"
         this.state = {
-            Dishes: []
-
+            Dishes: [],
+            dishPopUp: false
         }
     }
     //handle input change
@@ -40,6 +40,20 @@ export class GetDishes extends Component {
 
 
     }
+    displayPicture = ( name ) => {
+        var dishImagePath = this.backend_url + "/images/dishes/" + name
+        return (
+
+            <img src={ dishImagePath } width="102%" height="100%" alt="" />
+
+        )
+    }
+
+    toggleDishPopUp = ( e ) => {
+        this.setState( {
+            dishPopUp: !this.state.dishPopUp
+        } )
+    }
 
     render () {
         var redirectVar = null;
@@ -48,13 +62,7 @@ export class GetDishes extends Component {
         }
         let details = this.state.Dishes.map( ( dish ) => {
             return (
-                <tr>
-                    <td>{ dish.dishName }</td>
-                    <td>{ dish.dishPrice }</td>
-                    <td>{ dish.dishCategory }</td>
-                    <td>{ dish.dishIngrediants }</td>
-                    <td>{ dish.dishDescription }</td>
-                </tr>
+                <IndividualDish dishData={ dish } />
             )
         } )
         return (

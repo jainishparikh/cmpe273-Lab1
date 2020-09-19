@@ -73,6 +73,7 @@ export class UserAbout extends Component {
         if ( !cookie.load( "auth" ) ) {
             redirectVar = <Redirect to="/login" />
         }
+
         return (
 
             < div >
@@ -82,7 +83,7 @@ export class UserAbout extends Component {
                         <div className="row mt-3 mb-3" style={ { height: "30%", background: "whitesmoke" } }>
                             {/* profile picture */ }
                             <div className="col-2">
-                                <img src={ this.state.profileImagePath } width="220" height="200" alt="" />
+                                <img src={ this.state.profileImagePath } width="102%" height="100%" alt="" />
                             </div>
                             {/* profile display */ }
                             <div className="col-8" >
@@ -107,6 +108,7 @@ export class UserAbout extends Component {
                                     </div>
 
                                     <div className="col-4" style={ { "padding": "0 15px", "border-left": "1px solid #e6e6e6" } }>
+
                                         <table>
                                             <tbody>
                                                 <th>Yelping Since:</th>
@@ -132,7 +134,10 @@ export class UserAbout extends Component {
                                     pathname: "/users/editprofile", state: {
                                         userData: this.state
                                     }
-                                } }>Edit Profile</Link>
+                                } }>
+
+                                    Edit Profile
+                                </Link>
                             </div>
                             {/* reviews */ }
                             <div className="col-8" style={ { "padding": "0 15px", "border-left": "1px solid #e6e6e6" } }>
@@ -148,6 +153,7 @@ export class UserAbout extends Component {
             </div >
         )
     }
+
 }
 
 export default UserAbout
