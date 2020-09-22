@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import cookie from 'react-cookies';
 import axios from 'axios';
 import ReactModal from 'react-modal'
+import updateUserProfileAction from '../../actions/updateUserProfileAction';
+import { connect } from "react-redux";
 
 
 export class Profile extends Component {
@@ -60,37 +62,38 @@ export class Profile extends Component {
 
     handleOnSubmit = e => {
         e.preventDefault();
-        console.log( "in handle submit" )
-        axios
-            .put( this.backend_url + "/users/about", this.state ).then( response => {
-                if ( response.status === 200 ) {
+        console.log( "in handle submit" );
+        this.props.updateUserProfileAction( this.state );
+        // axios
+        //     .put( this.backend_url + "/users/about", this.state ).then( response => {
+        //         if ( response.status === 200 ) {
 
-                    if ( cookie.load( 'email' ) !== this.state.email ) {
-                        cookie.remove( "email", {
-                            path: '/'
-                        } );
-                        cookie.save( "email", this.state.email, {
-                            path: '/',
-                            httpOnly: false,
-                            maxAge: 90000
-                        } )
-                    }
-                    if ( cookie.load( 'name' ) !== this.state.name ) {
-                        cookie.remove( "name", {
-                            path: '/'
-                        } );
-                        cookie.save( "name", this.state.name, {
-                            path: '/',
-                            httpOnly: false,
-                            maxAge: 90000
-                        } )
-                    }
-                    window.location.assign( "/users/about" );
-                }
+        //             if ( cookie.load( 'email' ) !== this.state.email ) {
+        //                 cookie.remove( "email", {
+        //                     path: '/'
+        //                 } );
+        //                 cookie.save( "email", this.state.email, {
+        //                     path: '/',
+        //                     httpOnly: false,
+        //                     maxAge: 90000
+        //                 } )
+        //             }
+        //             if ( cookie.load( 'name' ) !== this.state.name ) {
+        //                 cookie.remove( "name", {
+        //                     path: '/'
+        //                 } );
+        //                 cookie.save( "name", this.state.name, {
+        //                     path: '/',
+        //                     httpOnly: false,
+        //                     maxAge: 90000
+        //                 } )
+        //             }
+        //             window.location.assign( "/users/about" );
+        //         }
 
-            } ).catch( err => {
-                console.log( "error in updating profile" );
-            } )
+        //     } ).catch( err => {
+        //         console.log( "error in updating profile" );
+        //     } )
 
 
     }
@@ -137,12 +140,18 @@ export class Profile extends Component {
 
     render () {
         var redirectVar = null;
+        var redirectAbout = null
         if ( !cookie.load( "auth" ) ) {
             redirectVar = <Redirect to="/login" />
+        }
+        if ( this.props.update ) {
+            this.props.updateUserProfileAction();
+            redirectAbout = <Redirect to="/users/about" />
         }
         return (
             <div>
                 { redirectVar }
+                { redirectAbout }
                 <div className="container-fluid" style={ { height: "100vh" } }>
                     <div className="row h-100 mt-2">
                         <div className="col-2">
@@ -276,4 +285,20 @@ export class Profile extends Component {
     }
 }
 
-export default Profile
+const matchStateToProps = ( state ) => {
+    console.log( "inside matchStatetoProps", state )
+    return {
+        update: state.updateUserProfileReducer.update,
+        message: state.updateUserProfileReducer.message,
+        response: state.updateUserProfileReducer.response,
+    }
+
+}
+
+const matchDispatchToProps = ( dispatch ) => {
+    return {
+        updateUserProfileAction: ( data ) => dispatch( updateUserProfileAction( data ) ),
+    }
+}
+
+export default connect( matchStateToProps, matchDispatchToProps )( Profile )

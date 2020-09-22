@@ -7,7 +7,7 @@ var login = ( state = initialState, action ) => {
     switch ( action.type ) {
         case "user_login_success":
             newState.error = false;
-            newState.message = "Login Success"
+            newState.message = "Login Success";
             return newState;
         case "user_login_failed":
             newState.error = true;
