@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
+import { connect } from "react-redux";
+import userSignUpAction from '../../actions/userSignUpAction';
+
 export class Signup extends Component {
     constructor( props ) {
         super( props );
@@ -14,6 +18,7 @@ export class Signup extends Component {
             error: false
         }
     }
+
     //handle input change
     handleInputChange = inp => {
         this.setState( {
@@ -25,46 +30,47 @@ export class Signup extends Component {
     //handle submit
     handleSubmit = sub => {
         sub.preventDefault();
-
-        console.log( this.state );
-
-        if ( this.state.type === 'users' ) {
-            axios
-                .post( this.backend_url + '/users/signup', this.state )
-                .then( ( response ) => {
-                    if ( response.status === 200 ) {
-                        window.location.assign( '/login' )
-                    }
-
-                } )
-                .catch( ( err ) => {
-                    this.setState( {
-                        error: true
-                    } )
-
-                } );
-        } else if ( this.state.type === 'restaurants' ) {
-            axios
-                .post( this.backend_url + '/restaurants/signup', this.state )
-                .then( ( response ) => {
-                    console.log( response )
-                    if ( response.status === 200 ) {
-                        console.log( "redirecting to login" )
-                        window.location.assign( '/login' )
-                    }
-
-                } ).catch( ( err ) => {
-                    console.log( "inside restaurant error" )
-                    this.setState( {
-                        error: true
-                    } )
-
-                } );
+        console.log( this.state )
+        if ( this.state.type === "users" ) {
+            this.props.userSignUpAction( this.state )
         }
+        // if ( this.state.type === 'users' ) {
+        // axios
+        //     .post( this.backend_url + '/users/signup', this.state )
+        //     .then( ( response ) => {
+        //         if ( response.status === 200 ) {
+        //             window.location.assign( '/login' )
+        //         }
+
+        //     } )
+        //     .catch( ( err ) => {
+        //         this.setState( {
+        //             error: true
+        //         } )
+
+        //     } );
+        // } else if ( this.state.type === 'restaurants' ) {
+        //     axios
+        //         .post( this.backend_url + '/restaurants/signup', this.state )
+        //         .then( ( response ) => {
+        //             console.log( response )
+        //             if ( response.status === 200 ) {
+        //                 console.log( "redirecting to login" )
+        //                 window.location.assign( '/login' )
+        //             }
+
+        //         } ).catch( ( err ) => {
+        //             console.log( "inside restaurant error" )
+        //             this.setState( {
+        //                 error: true
+        //             } )
+
+        //         } );
+        // }
     };
 
     renderError = () => {
-        if ( this.state.error ) {
+        if ( this.props.error ) {
             return (
                 <div>
                     <h5>"User with this email already exist"</h5>
@@ -74,9 +80,14 @@ export class Signup extends Component {
     }
 
     render () {
+        let redirectVar = null
+        if ( this.props.auth ) {
+            redirectVar = <Redirect to='/login' />
+        }
 
         return (
             <div>
+                { redirectVar }
                 { this.renderError() }
                 <div className="container" style={ { height: "100vh" } }>
                     <div className="h-100">
@@ -125,4 +136,20 @@ export class Signup extends Component {
     }
 }
 
-export default Signup
+const matchStateToProps = ( state ) => {
+    console.log( "inside matchStatetoProps", state )
+    return {
+        auth: state.userSignUpReducer.auth,
+        error: state.userSignUpReducer.error,
+        message: state.userSignUpReducer.message
+    }
+
+}
+
+const matchDispatchToProps = ( dispatch ) => {
+    return {
+        userSignUpAction: ( data ) => dispatch( userSignUpAction( data ) ),
+    }
+}
+
+export default connect( matchStateToProps, matchDispatchToProps )( Signup )

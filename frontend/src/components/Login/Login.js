@@ -3,6 +3,8 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import cookie from "react-cookies";
+import loginAction from '../../actions/loginAction';
+import { connect } from "react-redux";
 
 export class Login extends Component {
     constructor( props ) {
@@ -25,66 +27,67 @@ export class Login extends Component {
     //handle submit
     handleSubmit = sub => {
         sub.preventDefault();
-        var backend_path = '';
-        if ( this.state.type === 'users' ) {
-            backend_path = '/users/login'
-        } else if ( this.state.type === 'restaurants' ) {
-            backend_path = '/restaurants/login'
-        }
-        console.log( this.state );
-        console.log( this.backend_url + backend_path )
-        axios
-            .post( this.backend_url + backend_path, this.state )
-            .then( ( response ) => {
-                if ( response.status === 200 ) {
-                    this.setState( {
-                        error: false
-                    } )
-                    cookie.save( "auth", true, {
-                        path: '/',
-                        httpOnly: false,
-                        maxAge: 90000
-                    } )
-                    cookie.save( "id", response.data.id, {
-                        path: '/',
-                        httpOnly: false,
-                        maxAge: 90000
-                    } )
-                    cookie.save( "name", response.data.name, {
-                        path: '/',
-                        httpOnly: false,
-                        maxAge: 90000
-                    } )
-                    cookie.save( "email", response.data.email, {
-                        path: '/',
-                        httpOnly: false,
-                        maxAge: 90000
-                    } )
-                    cookie.save( "type", this.state.type, {
-                        path: '/',
-                        httpOnly: false,
-                        maxAge: 90000
-                    } )
-                    if ( this.state.type === 'users' ) {
-                        window.location.assign( '/users/dashboard' );
-                    } else if ( this.state.type === 'restaurants' ) {
-                        window.location.assign( '/restaurants/dashboard' );
-                    }
-                }
-            } )
-            .catch( ( err ) => {
-                this.setState( {
-                    error: true
-                } )
+        this.props.loginAction( this.state );
+        // var backend_path = '';
+        // if ( this.state.type === 'users' ) {
+        //     backend_path = '/users/login'
+        // } else if ( this.state.type === 'restaurants' ) {
+        //     backend_path = '/restaurants/login'
+        // }
+        // console.log( this.state );
+        // console.log( this.backend_url + backend_path )
+        // axios
+        //     .post( this.backend_url + backend_path, this.state )
+        //     .then( ( response ) => {
+        //         if ( response.status === 200 ) {
+        //             this.setState( {
+        //                 error: false
+        //             } )
+        //             cookie.save( "auth", true, {
+        //                 path: '/',
+        //                 httpOnly: false,
+        //                 maxAge: 90000
+        //             } )
+        //             cookie.save( "id", response.data.id, {
+        //                 path: '/',
+        //                 httpOnly: false,
+        //                 maxAge: 90000
+        //             } )
+        //             cookie.save( "name", response.data.name, {
+        //                 path: '/',
+        //                 httpOnly: false,
+        //                 maxAge: 90000
+        //             } )
+        //             cookie.save( "email", response.data.email, {
+        //                 path: '/',
+        //                 httpOnly: false,
+        //                 maxAge: 90000
+        //             } )
+        //             cookie.save( "type", this.state.type, {
+        //                 path: '/',
+        //                 httpOnly: false,
+        //                 maxAge: 90000
+        //             } )
+        //             if ( this.state.type === 'users' ) {
+        //                 window.location.assign( '/users/dashboard' );
+        //             } else if ( this.state.type === 'restaurants' ) {
+        //                 window.location.assign( '/restaurants/dashboard' );
+        //             }
+        //         }
+        //     } )
+        //     .catch( ( err ) => {
+        //         this.setState( {
+        //             error: true
+        //         } )
 
-            } );
+        //     } );
     };
 
     renderError = () => {
-        if ( this.state.error ) {
+        if ( this.props.error ) {
             return (
                 <div>
-                    <h5>"Invalid Username or Password"</h5>
+                    <h5>{ this.props.message }</h5>
                 </div>
             )
         }
@@ -139,4 +142,20 @@ export class Login extends Component {
     }
 }
 
-export default Login
+const matchStateToProps = ( state ) => {
+    console.log( "inside matchStatetoProps", state )
+    return {
+        error: state.loginReducer.error,
+        message: state.loginReducer.message
+    }
+
+}
+
+const matchDispatchToProps = ( dispatch ) => {
+    return {
+        loginAction: ( data ) => dispatch( loginAction( data ) ),
+    }
+}
+
+export default connect( matchStateToProps, matchDispatchToProps )( Login )
+
