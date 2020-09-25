@@ -25,12 +25,15 @@ export class GetDishes extends Component {
         var restaurantID = cookie.load( "id" );
         axios.get( BACKEND_URL + "/restaurants/dishes/" + restaurantID ).then( response => {
             if ( response.status === 200 ) {
+                let images = []
                 response.data.map( ( dish ) => {
+                    images.push( dish.dishPicture )
                     this.setState( {
                         Dishes: [ ...this.state.Dishes, dish ]
                     } )
 
                 } )
+                this.props.displayDishes( images )
                 console.log( this.state )
 
             }
@@ -69,12 +72,12 @@ export class GetDishes extends Component {
             <div>
                 { redirectVar }
                 <div className="container">
-                    <table>
+                    {/* <table>
                         <thead></thead>
-                        <tbody>
-                            { details }
-                        </tbody>
-                    </table>
+                        <tbody> */}
+                    { details }
+                    {/* </tbody>
+                    </table> */}
 
                 </div>
 

@@ -7,6 +7,7 @@ import axios from 'axios';
 import AddDish from './AddDishes';
 import GetDishes from './GetDishes';
 import BACKEND_URL from '../../config/config';
+import profile_picture from '../../images/restaurant.jpeg'
 
 export class RestaurantAbout extends Component {
     constructor( props ) {
@@ -19,7 +20,9 @@ export class RestaurantAbout extends Component {
             location: "",
             description: "",
             timing: "",
-            dishPopUp: false
+            dishPopUp: false,
+            profileImagePath: profile_picture,
+            images: []
         }
 
     }
@@ -29,6 +32,11 @@ export class RestaurantAbout extends Component {
             console.log( response )
             if ( response.status === 200 ) {
                 console.log( "got data" )
+                let imagePath = BACKEND_URL + "/images/profilepics/" + response.data.profilePicture
+                if ( response.data.profilePicture === null ) {
+                    console.log( "inside imagepath null" )
+                    imagePath = profile_picture
+                }
                 this.setState( {
                     restaurantID: response.data.restaurantID,
                     name: response.data.name,
@@ -36,7 +44,8 @@ export class RestaurantAbout extends Component {
                     contact: response.data.contact,
                     location: response.data.location,
                     description: response.data.description,
-                    timing: response.data.timing
+                    timing: response.data.timing,
+                    profileImagePath: imagePath
                 } )
             }
 
@@ -54,6 +63,11 @@ export class RestaurantAbout extends Component {
             dishPopUp: !this.state.dishPopUp
         } )
     }
+    displayImageStore = ( imageArray ) => {
+        this.setState( {
+            images: [ ...imageArray ]
+        } )
+    }
 
 
     render () {
@@ -61,22 +75,32 @@ export class RestaurantAbout extends Component {
         if ( !cookie.load( "auth" ) ) {
             redirectVar = <Redirect to="/login" />
         }
+
+        let displayDishImages = this.state.images.map( ( image ) => {
+            console.log( "images,", image )
+            var dishImagePath = BACKEND_URL + "/images/dishes/" + image
+            return (
+                <img src={ dishImagePath } style={ { "margin": "10px" } } width="200px" height="90%" alt="" />
+            )
+        } )
+
         return (
             < div >
                 { redirectVar }
                 <div className="container-fluid m-1" style={ { height: "100vh" } }>
                     <div className="row h-100">
                         <div className="col-3">
-                            <div className="profile-info" style={ { height: "70%" } }>
+                            <div className="profile-info" style={ { height: "80%" } }>
                                 <table style={ { height: "100%" } }>
                                     <tbody>
                                         <div className="restaurant-info" style={ { height: "60%" } }>
-                                            <tr>{ this.state.name }</tr>
+                                            <tr> <img src={ this.state.profileImagePath } width="102%" height="100%" alt="" /></tr>
+                                            <tr><h2>{ this.state.name }</h2></tr>
                                             <tr>{ this.state.location }</tr>
                                             <tr>{ this.state.description }</tr>
                                         </div>
                                         <div className="rstaurant-contact" style={ { height: "40%" } }>
-                                            <tr>Contact Detals:</tr>
+                                            <tr><h5>Contact Detals:</h5></tr>
                                             <tr>{ this.state.contact }</tr>
                                             <tr>{ this.state.email }</tr>
                                             <tr>{ this.state.timing }</tr>
@@ -84,7 +108,7 @@ export class RestaurantAbout extends Component {
                                     </tbody>
                                 </table>
                             </div>
-                            <div className="profile-edit" style={ { height: "30%" } }>
+                            <div className="profile-edit" style={ { height: "20%" } }>
                                 <Link className="btn btn-primary" to={ {
                                     pathname: "/restaurants/editprofile", state: {
                                         userData: this.state
@@ -93,8 +117,21 @@ export class RestaurantAbout extends Component {
                             </div>
                         </div>
                         <div className="col-9">
+                            <div className="row">
+                                <h3>Here's What We Offer</h3>
+                            </div>
+                            <div className="row">
+                                <div style={ {
+                                    "width": "auto",
+                                    "overflow": "auto",
+                                    "white-space": "nowrap",
+                                    "height": "200px"
+                                } }>
+                                    { displayDishImages }
+                                </div>
+                            </div>
                             {/* Add dish */ }
-                            <div className="row mb-3">
+                            <div className="row mt-3 mb-3">
 
                                 <div className="add-dish m-2" >
                                     <button className="btn btn-primary" onClick={ this.toggleDishPopUp }>Add Dish</button>
@@ -133,9 +170,10 @@ export class RestaurantAbout extends Component {
                             {/* Display dishes */ }
                             <div className="row">
                                 <div className="dishes">
-                                    <GetDishes />
+                                    <GetDishes displayDishes={ this.displayImageStore } />
                                 </div>
                             </div>
+
                         </div>
 
                     </div>
@@ -146,6 +184,7 @@ export class RestaurantAbout extends Component {
         )
 
     }
+
 }
 
 export default RestaurantAbout

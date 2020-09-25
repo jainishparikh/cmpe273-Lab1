@@ -28,7 +28,7 @@ export class IndividualDish extends Component {
         var dishImagePath = BACKEND_URL + "/images/dishes/" + name
         return (
 
-            <img src={ dishImagePath } width="100%" height="100%" alt="" />
+            <img src={ dishImagePath } width="200px" height="180px" alt="" />
 
         )
     }
@@ -39,14 +39,18 @@ export class IndividualDish extends Component {
 
         return (
             <div>
-                <tr>
-                    <td >{ this.displayPicture( this.state.dishPicture ) }</td>
-                    <td>{ this.state.dishName }</td>
-                    <td>{ this.state.dishPrice }</td>
-                    <td>{ this.state.dishCategory }</td>
-                    <td>{ this.state.dishIngrediants }</td>
-                    <td>{ this.state.dishDescription }</td>
-                    <td>
+                <div className="row p-1 m-2" style={ { "width": "100%", "height": "200px", "border": "1px gray solid" } }>
+                    <div className="col-4">
+                        { this.displayPicture( this.state.dishPicture ) }
+                    </div>
+                    <div className='col-6'>
+                        <div className='row'><h3>{ this.state.dishName }</h3></div>
+                        <div className='row'><b>Cost: </b>${ this.state.dishPrice }</div>
+                        <div className='row'><b>Category: </b>{ this.state.dishCategory }</div>
+                        <div className='row'><b>Ingrediants: </b>{ this.state.dishIngrediants }</div>
+                        <div className='row'><b>Description: </b>{ this.state.dishDescription }</div>
+                    </div>
+                    <div className="col-2">
                         <div className="edit-dish" >
                             <button className="btn btn-primary" onClick={ this.toggleDishPopUp }>Edit Dish</button>
                         </div>
@@ -55,8 +59,11 @@ export class IndividualDish extends Component {
                             <AddDishes call="edit" dishData={ this.state } closePopUp={ this.toggleDishPopUp } />
                         </Modal>
 
-                    </td>
-                </tr>
+                    </div>
+
+                </div>
+
+
             </div>
         )
     }

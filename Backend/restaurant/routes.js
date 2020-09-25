@@ -123,6 +123,32 @@ router.put( '/about', ( req, res ) => {
 } );
 
 
+//upload profile pic
+
+router.post( '/uploadpicture', ( req, res ) => {
+    let upload = req.app.get( 'upload_profileImage' );
+    upload( req, res, err => {
+        if ( err ) {
+            console.log( "Error uploading image", err );
+            res.status( 400 ).end( 'Issue with uploading' )
+        } else {
+            console.log( "Inside upload", req.file, req.body );
+            var restaurantID = req.body.restaurantID;
+            var sql = `update restaurants set profilePicture='${ req.file.filename }' where restaurantID=${ restaurantID }`;
+            connection.query( sql, ( err, results ) => {
+                if ( err ) {
+                    console.log( err );
+                    res.status( 400 ).end( "Error:", err );
+                } else {
+                    res.status( 200 ).send( JSON.stringify( results ) );
+                }
+
+            } );
+
+        }
+    } )
+} );
+
 
 //get dishes
 router.get( '/dishes/:restaurantID', ( req, res ) => {
@@ -143,6 +169,9 @@ router.get( '/dishes/:restaurantID', ( req, res ) => {
 
     } );
 } );
+
+
+
 
 //add dishes
 // router.post( '/dishes', ( req, res ) => {

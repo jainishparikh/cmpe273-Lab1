@@ -3,6 +3,7 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import cookie from 'react-cookies';
 import axios from 'axios';
+import ReactModal from 'react-modal';
 import BACKEND_URL from '../../config/config'
 
 export class Profile extends Component {
@@ -16,7 +17,10 @@ export class Profile extends Component {
                 contact: this.props.location.state.userData.contact,
                 location: this.props.location.state.userData.location,
                 description: this.props.location.state.userData.description,
-                timing: this.props.location.state.userData.timing
+                timing: this.props.location.state.userData.timing,
+                profileImageUpdate: false,
+                newProfileImage: "",
+                profileImagePath: "",
             }
         } else {
             this.state = {
@@ -26,7 +30,10 @@ export class Profile extends Component {
                 contact: "",
                 location: "",
                 description: "",
-                timing: ""
+                timing: "",
+                profileImageUpdate: false,
+                newProfileImage: "",
+                profileImagePath: "",
             }
         }
     }
@@ -75,6 +82,44 @@ export class Profile extends Component {
 
     }
 
+    //Image Upload toggle
+    toggleImageUpdate = ( e ) => {
+        this.setState( {
+            profileImageUpdate: !this.state.profileImageUpdate
+        } )
+    }
+
+    //Image Upload
+    handleImageUpload = ( e ) => {
+        this.setState( {
+            newProfileImage: e.target.files[ 0 ]
+        } )
+    }
+    //Image Submit
+    handleImageSubmit = ( e ) => {
+        e.preventDefault();
+        this.toggleImageUpdate();
+        console.log( this.state.newProfileImage );
+        const formData = new FormData();
+        formData.append( 'myImage', this.state.newProfileImage, this.state.newProfileImage.name )
+        formData.append( 'restaurantID', this.state.restaurantID )
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
+        axios
+            .post( BACKEND_URL + '/users/uploadpicture', formData, config ).then( ( response ) => {
+                console.log( response.data.filename )
+                this.setState( {
+                    profileImagePath: BACKEND_URL + "/images/profilepics/" + response.data.filename + ""
+
+                } )
+            } ).catch( err => {
+                console.log( "Error in image upload: ", err );
+            } )
+
+    }
 
 
     render () {
@@ -91,6 +136,17 @@ export class Profile extends Component {
                             <h3>Edit Profile</h3>
                         </div>
                         <div className="col-10">
+                            <div className="row ml-3">
+                                <button className="btn btn-primary" onClick={ this.toggleImageUpdate }>Change Profile Picture</button>
+                                <ReactModal isOpen={ this.state.profileImageUpdate } >
+                                    <form onSubmit={ this.handleImageSubmit } encType='multipart/form-data' style={ { textAlign: "Center" } }>
+                                        <input type="file" name="newProfileImage" onChange={ this.handleImageUpload } />
+                                        <button className="btn btn-primary" type="submit">Done</button>
+                                        <button className="btn btn-primary" onClick={ this.toggleImageUpdate }>Cancel</button>
+                                    </form>
+                                </ReactModal>
+
+                            </div>
                             <form onSubmit={ this.handleOnSubmit }>
                                 <div className="row m-1">
                                     <div className="col-5">
