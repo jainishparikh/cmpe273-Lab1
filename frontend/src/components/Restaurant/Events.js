@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router';
-import { Link } from 'react-router-dom'
 import cookie from 'react-cookies';
 import axios from 'axios';
 import IndividualEvent from './IndividualEvent';

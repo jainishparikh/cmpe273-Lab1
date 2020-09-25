@@ -8,6 +8,7 @@ import Logout from './Login/Logout';
 import UsersDashboard from './Users/Dashboard';
 import UserAbout from "./Users/About";
 import EditUserProfile from "./Users/Profile";
+import UserEvents from './Users/Events'
 //restaurant
 import RestaurantDashboard from './Restaurant/Dashboard';
 import RestaurantAbout from "./Restaurant/About";
@@ -27,6 +28,7 @@ export class Main extends Component {
                 <Route path='/users/dashboard' component={ UsersDashboard } />
                 <Route path='/users/about' component={ UserAbout } />
                 <Route path='/users/editprofile' component={ EditUserProfile } />
+                <Route path='/users/events' component={ UserEvents } />
                 <Route path='/restaurants/dashboard' component={ RestaurantDashboard } />
                 <Route path='/restaurants/about' component={ RestaurantAbout } />
                 <Route path='/restaurants/editprofile' component={ EditRestaurantProfile } />

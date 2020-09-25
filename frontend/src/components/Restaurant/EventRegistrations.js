@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
-import cookie from 'react-cookies';
 import axios from 'axios';
 import BACKEND_URL from '../../config/config'
-import UserProfile from './UserProfile';
 
 export class EventRegistrations extends Component {
     constructor( props ) {

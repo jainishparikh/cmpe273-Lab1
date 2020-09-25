@@ -24,7 +24,7 @@ export class Navbar extends Component {
                                     <Link class="nav-link" to="" style={ { color: 'white' } }>Orders</Link>
                                 </li>
                                 <li class="nav-item">
-                                    <Link class="nav-link" to="" style={ { color: 'white' } }>Events</Link>
+                                    <Link class="nav-link" to="/users/events" style={ { color: 'white' } }>Events</Link>
                                 </li>
                                 <li class="nav-item">
                                     <Link class="nav-link" to="/users/about" style={ { color: 'white' } }>About</Link>
