@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import AddDishes from './AddDishes';
 import Modal from 'react-modal';
+import BACKEND_URL from '../../config/config'
 
 export class IndividualDish extends Component {
     constructor( props ) {
         super( props );
-        this.backend_url = "http://localhost:3001"
         this.state = {
             dishID: this.props.dishData.dishID,
             dishName: this.props.dishData.dishName,
@@ -25,7 +25,7 @@ export class IndividualDish extends Component {
     }
 
     displayPicture = ( name ) => {
-        var dishImagePath = this.backend_url + "/images/dishes/" + name
+        var dishImagePath = BACKEND_URL + "/images/dishes/" + name
         return (
 
             <img src={ dishImagePath } width="100%" height="100%" alt="" />

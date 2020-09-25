@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import BACKEND_URL from '../../config/config'
 export class Signup extends Component {
     constructor( props ) {
         super( props );
-        this.backend_url = "http://localhost:3001";
         this.state = {
             type: '',
             name: '',
@@ -30,7 +30,7 @@ export class Signup extends Component {
 
         if ( this.state.type === 'users' ) {
             axios
-                .post( this.backend_url + '/users/signup', this.state )
+                .post( BACKEND_URL + '/users/signup', this.state )
                 .then( ( response ) => {
                     if ( response.status === 200 ) {
                         window.location.assign( '/login' )
@@ -45,7 +45,7 @@ export class Signup extends Component {
                 } );
         } else if ( this.state.type === 'restaurants' ) {
             axios
-                .post( this.backend_url + '/restaurants/signup', this.state )
+                .post( BACKEND_URL + '/restaurants/signup', this.state )
                 .then( ( response ) => {
                     console.log( response )
                     if ( response.status === 200 ) {

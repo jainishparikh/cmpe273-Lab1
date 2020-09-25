@@ -3,11 +3,11 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import cookie from 'react-cookies';
 import axios from 'axios';
+import BACKEND_URL from '../../config/config'
 
 export class Profile extends Component {
     constructor( props ) {
         super( props )
-        this.backend_url = "http://localhost:3001";
         if ( this.props.location.state ) {
             this.state = {
                 restaurantID: this.props.location.state.userData.restaurantID,
@@ -42,7 +42,7 @@ export class Profile extends Component {
         e.preventDefault();
         console.log( "in handle submit" )
         axios
-            .put( this.backend_url + "/restaurants/about", this.state ).then( response => {
+            .put( BACKEND_URL + "/restaurants/about", this.state ).then( response => {
                 if ( response.status === 200 ) {
 
                     if ( cookie.load( 'email' ) !== this.state.email ) {

@@ -7,6 +7,8 @@ var path = require( 'path' )
 var app = express();
 var user = require( './user/routes' )
 var restaurant = require( './restaurant/routes' )
+var reviews = require( './reviews/routes' )
+var events = require( './events/routes' );
 var session = require( "express-session" );
 var cookieParser = require( "cookie-parser" );
 var multer = require( 'multer' );
@@ -72,6 +74,8 @@ app.set( "upload_dishImage", upload_dishImage );
 //routes
 app.use( '/users', user );
 app.use( '/restaurants', restaurant );
+app.use( '/reviews', reviews );
+app.use( '/events', events );
 
 
 //get index page

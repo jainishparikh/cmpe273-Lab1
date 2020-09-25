@@ -68,6 +68,21 @@ router.post( '/login', ( req, res ) => {
 
 } );
 
+//get all restaurants
+router.get( '/restaurants/all', ( req, res ) => {
+    // var email = req.params.email;
+    var sql = `select * from restaurants`;
+    connection.query( sql, ( err, results ) => {
+        if ( err ) {
+            console.log( err );
+            res.end( "Error:", err );
+        } else {
+            res.status( 200 ).send( JSON.stringify( results ) );
+        }
+
+    } );
+} );
+
 
 //get about
 router.get( '/about/:email', ( req, res ) => {

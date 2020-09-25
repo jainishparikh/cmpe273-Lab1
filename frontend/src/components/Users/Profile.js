@@ -3,13 +3,13 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import cookie from 'react-cookies';
 import axios from 'axios';
-import ReactModal from 'react-modal'
+import ReactModal from 'react-modal';
+import BACKEND_URL from '../../config/config'
 
 
 export class Profile extends Component {
     constructor( props ) {
         super( props )
-        this.backend_url = "http://localhost:3001";
         if ( this.props.location.state ) {
             this.state = {
                 userID: this.props.location.state.userData.userID,
@@ -62,7 +62,7 @@ export class Profile extends Component {
         e.preventDefault();
         console.log( "in handle submit" )
         axios
-            .put( this.backend_url + "/users/about", this.state ).then( response => {
+            .put( BACKEND_URL + "/users/about", this.state ).then( response => {
                 if ( response.status === 200 ) {
 
                     if ( cookie.load( 'email' ) !== this.state.email ) {
@@ -123,10 +123,10 @@ export class Profile extends Component {
             }
         }
         axios
-            .post( this.backend_url + '/users/uploadpicture', formData, config ).then( ( response ) => {
+            .post( BACKEND_URL + '/users/uploadpicture', formData, config ).then( ( response ) => {
                 console.log( response.data.filename )
                 this.setState( {
-                    profileImagePath: this.backend_url + "/images/profilepics/" + response.data.filename + ""
+                    profileImagePath: BACKEND_URL + "/images/profilepics/" + response.data.filename + ""
 
                 } )
             } ).catch( err => {

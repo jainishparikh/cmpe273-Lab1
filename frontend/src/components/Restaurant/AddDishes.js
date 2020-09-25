@@ -3,12 +3,12 @@ import { Redirect } from 'react-router';
 //import { Link } from 'react-router-dom';
 import cookie from 'react-cookies';
 import axios from 'axios';
+import BACKEND_URL from '../../config/config'
 
 
 export class AddDishes extends Component {
     constructor( props ) {
         super( props )
-        this.backend_url = "http://localhost:3001"
         this.state = {
             dishID: "",
             dishName: "",
@@ -34,7 +34,7 @@ export class AddDishes extends Component {
                 dishCategory: this.props.dishData.dishCategory,
                 dishImageUpdate: false,
                 newDishImage: "",
-                dishImagePath: this.backend_url + "/images/dishes/" + this.props.dishData.dishPicture,
+                dishImagePath: BACKEND_URL + "/images/dishes/" + this.props.dishData.dishPicture,
             } )
         }
     }
@@ -87,7 +87,7 @@ export class AddDishes extends Component {
             }
             console.log( formData );
             axios
-                .put( this.backend_url + api_path, formData, config ).then( response => {
+                .put( BACKEND_URL + api_path, formData, config ).then( response => {
                     if ( response.status === 200 ) {
                         console.log( "dish successfully added" + response );
 
@@ -118,7 +118,7 @@ export class AddDishes extends Component {
                 }
             }
             axios
-                .post( this.backend_url + "/restaurants/dishes", formData, config ).then( response => {
+                .post( BACKEND_URL + "/restaurants/dishes", formData, config ).then( response => {
                     if ( response.status === 200 ) {
                         console.log( "dish successfully added" + response );
 
@@ -160,7 +160,7 @@ export class AddDishes extends Component {
     //         }
     //     }
     //     axios
-    //         .post( this.backend_url + '/restaurants/uploadpicture', formData, config ).then( ( response ) => {
+    //         .post( BACKEND_URL + '/restaurants/uploadpicture', formData, config ).then( ( response ) => {
     //             console.log( response.data )
     //             // this.props.closePopUp();
     //             window.location.assign( "/restaurants/about" )
@@ -179,7 +179,7 @@ export class AddDishes extends Component {
             <div>
                 { redirectVar }
 
-                <div className="container">
+                <div className="container" >
 
                     <form onSubmit={ this.handleOnSubmit }>
                         <div className="row mt-2">

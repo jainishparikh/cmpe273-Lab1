@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router';
 import cookie from 'react-cookies';
 import axios from 'axios';
-import IndividualDish from './IndividualDish'
+import IndividualDish from './IndividualDish';
+import BACKEND_URL from '../../config/config'
 
 export class GetDishes extends Component {
     constructor( props ) {
         super( props )
-        this.backend_url = "http://localhost:3001"
         this.state = {
             Dishes: [],
             dishPopUp: false
@@ -23,7 +23,7 @@ export class GetDishes extends Component {
 
     componentDidMount () {
         var restaurantID = cookie.load( "id" );
-        axios.get( this.backend_url + "/restaurants/dishes/" + restaurantID ).then( response => {
+        axios.get( BACKEND_URL + "/restaurants/dishes/" + restaurantID ).then( response => {
             if ( response.status === 200 ) {
                 response.data.map( ( dish ) => {
                     this.setState( {
@@ -41,7 +41,7 @@ export class GetDishes extends Component {
 
     }
     displayPicture = ( name ) => {
-        var dishImagePath = this.backend_url + "/images/dishes/" + name
+        var dishImagePath = BACKEND_URL + "/images/dishes/" + name
         return (
 
             <img src={ dishImagePath } width="102%" height="100%" alt="" />

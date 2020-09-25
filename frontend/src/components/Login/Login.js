@@ -3,11 +3,11 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import cookie from "react-cookies";
+import BACKEND_URL from '../../config/config'
 
 export class Login extends Component {
     constructor( props ) {
         super( props );
-        this.backend_url = "http://localhost:3001";
         this.state = {
             type: '',
             email: '',
@@ -32,9 +32,9 @@ export class Login extends Component {
             backend_path = '/restaurants/login'
         }
         console.log( this.state );
-        console.log( this.backend_url + backend_path )
+        console.log( BACKEND_URL + backend_path )
         axios
-            .post( this.backend_url + backend_path, this.state )
+            .post( BACKEND_URL + backend_path, this.state )
             .then( ( response ) => {
                 if ( response.status === 200 ) {
                     this.setState( {
@@ -92,7 +92,7 @@ export class Login extends Component {
     render () {
 
         if ( cookie.load( 'auth' ) && cookie.load( 'type' ) === 'users' ) {
-            return <Redirect to='/home' />
+            return <Redirect to='/users/dashboard' />
         }
         else if ( cookie.load( 'auth' ) && cookie.load( 'type' ) === 'restaurants' ) {
             return <Redirect to='/restautants/dashboard' />

@@ -5,9 +5,8 @@ import cookie from 'react-cookies';
 import axios from 'axios';
 import profile_picture from '../../images/profile.png';
 import BACKEND_URL from '../../config/config'
-// import review from './Reviews';
 
-export class UserAbout extends Component {
+export class UserProfile extends Component {
     constructor( props ) {
         super( props )
         this.state = {
@@ -28,8 +27,9 @@ export class UserAbout extends Component {
         }
 
     }
+
     componentDidMount () {
-        let email = cookie.load( "email" )
+        let email = this.props.match.params.userEmail
         axios.get( BACKEND_URL + '/users/about/' + email ).then( ( response ) => {
             if ( response.status === 200 ) {
                 console.log( "got data" )
@@ -66,20 +66,22 @@ export class UserAbout extends Component {
         } );
     }
 
-
-
+    goBackToEvents = ( e ) => {
+        window.location.assign( "/restaurants/events" );
+    }
     render () {
         var redirectVar = null;
         if ( !cookie.load( "auth" ) ) {
             redirectVar = <Redirect to="/login" />
         }
-
         return (
-
-            < div >
+            <div>
                 { redirectVar }
                 <div className="container-fluid">
                     <div className="container-fluid" style={ { height: "100vh" } }>
+                        <div className="row mt-2">
+                            <Link className="btn btn-primary" to="/restaurants/events">Back to Events</Link>
+                        </div>
                         <div className="row mt-3 mb-3" style={ { height: "30%", background: "whitesmoke" } }>
                             {/* profile picture */ }
                             <div className="col-2">
@@ -127,25 +129,7 @@ export class UserAbout extends Component {
 
                         </div>
 
-                        <div className="row" style={ { height: "70%" } }>
-                            {/* edit-profile */ }
-                            <div className="col-2" >
-                                <Link className="btn btn-primary" to={ {
-                                    pathname: "/users/editprofile", state: {
-                                        userData: this.state
-                                    }
-                                } }>
 
-                                    Edit Profile
-                                </Link>
-                            </div>
-                            {/* reviews */ }
-                            <div className="col-8" style={ { "padding": "0 15px", "border-left": "1px solid #e6e6e6" } }>
-                                Reviews
-                            </div>
-
-
-                        </div>
                     </div>
 
 
@@ -153,7 +137,6 @@ export class UserAbout extends Component {
             </div >
         )
     }
-
 }
 
-export default UserAbout
+export default UserProfile

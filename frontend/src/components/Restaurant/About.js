@@ -5,12 +5,12 @@ import cookie from 'react-cookies';
 import Modal from 'react-modal';
 import axios from 'axios';
 import AddDish from './AddDishes';
-import GetDishes from './GetDishes'
+import GetDishes from './GetDishes';
+import BACKEND_URL from '../../config/config';
 
 export class RestaurantAbout extends Component {
     constructor( props ) {
         super( props )
-        this.backend_url = "http://localhost:3001"
         this.state = {
             restaurantID: "",
             name: "",
@@ -25,7 +25,7 @@ export class RestaurantAbout extends Component {
     }
     componentDidMount () {
         let email = cookie.load( "email" )
-        axios.get( this.backend_url + '/restaurants/about/' + email ).then( ( response ) => {
+        axios.get( BACKEND_URL + '/restaurants/about/' + email ).then( ( response ) => {
             console.log( response )
             if ( response.status === 200 ) {
                 console.log( "got data" )
@@ -100,7 +100,30 @@ export class RestaurantAbout extends Component {
                                     <button className="btn btn-primary" onClick={ this.toggleDishPopUp }>Add Dish</button>
                                 </div>
                                 {/* using react-modal for popup to add dish */ }
-                                <Modal isOpen={ this.state.dishPopUp }  >
+                                <Modal isOpen={ this.state.dishPopUp } style={ {
+                                    overlay: {
+                                        position: 'fixed',
+                                        top: 0,
+                                        left: 0,
+                                        right: 0,
+                                        bottom: 0,
+                                        backgroundColor: 'rgba(255, 255, 255, 0.25)'
+                                    },
+                                    content: {
+                                        position: 'relative',
+                                        top: '20%',
+                                        left: '20%',
+                                        right: '20%',
+                                        bottom: '20%',
+                                        border: '2px solid #ccc',
+                                        background: '#fff',
+                                        overflow: 'auto',
+                                        WebkitOverflowScrolling: 'touch',
+                                        borderRadius: '4px',
+                                        outline: 'none',
+                                        padding: '20px'
+                                    }
+                                } } >
                                     <AddDish call="add" closePopUp={ this.toggleDishPopUp } />
                                 </Modal>
 

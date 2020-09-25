@@ -12,6 +12,9 @@ import EditUserProfile from "./Users/Profile";
 import RestaurantDashboard from './Restaurant/Dashboard';
 import RestaurantAbout from "./Restaurant/About";
 import EditRestaurantProfile from "./Restaurant/Profile";
+import RestaurantReviews from "./Restaurant/Reviews";
+import RestaurantEvents from "./Restaurant/Events";
+import UserProfiles from "./Restaurant/UserProfile"
 
 export class Main extends Component {
     render () {
@@ -27,6 +30,9 @@ export class Main extends Component {
                 <Route path='/restaurants/dashboard' component={ RestaurantDashboard } />
                 <Route path='/restaurants/about' component={ RestaurantAbout } />
                 <Route path='/restaurants/editprofile' component={ EditRestaurantProfile } />
+                <Route path='/restaurants/reviews' component={ RestaurantReviews } />
+                <Route path='/restaurants/events' component={ RestaurantEvents } />
+                <Route path='/restaurants/userprofiles/:userEmail' component={ UserProfiles } />
 
             </div>
         )
