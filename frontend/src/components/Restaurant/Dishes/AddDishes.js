@@ -3,7 +3,7 @@ import { Redirect } from 'react-router';
 //import { Link } from 'react-router-dom';
 import cookie from 'react-cookies';
 import axios from 'axios';
-import BACKEND_URL from '../../config/config'
+import BACKEND_URL from '../../../config/config'
 
 
 export class AddDishes extends Component {

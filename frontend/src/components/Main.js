@@ -5,17 +5,17 @@ import Navbar from './LandingPage/Navbar';
 import Login from './Login/Login';
 import Logout from './Login/Logout';
 //User
-import UsersDashboard from './Users/Dashboard';
-import UserAbout from "./Users/About";
-import EditUserProfile from "./Users/Profile";
-import UserEvents from './Users/Events'
+import UsersDashboard from './Users/Dashboard/Dashboard';
+import UserAbout from "./Users/Profile/About";
+import EditUserProfile from "./Users/Profile/Profile";
+import UserEvents from './Users/Events/Events'
 //restaurant
 import RestaurantDashboard from './Restaurant/Dashboard';
-import RestaurantAbout from "./Restaurant/About";
-import EditRestaurantProfile from "./Restaurant/Profile";
-import RestaurantReviews from "./Restaurant/Reviews";
-import RestaurantEvents from "./Restaurant/Events";
-import UserProfiles from "./Restaurant/UserProfile"
+import RestaurantAbout from "./Restaurant/Profile/About";
+import EditRestaurantProfile from "./Restaurant/Profile/Profile";
+import RestaurantReviews from "./Restaurant/Reviews/Reviews";
+import RestaurantEvents from "./Restaurant/Events/Events";
+import UserProfiles from "./Restaurant/Profile/UserProfile"
 
 export class Main extends Component {
     render () {

@@ -3,7 +3,7 @@ import { Redirect } from 'react-router';
 import cookie from 'react-cookies';
 import axios from 'axios';
 import IndividualDish from './IndividualDish';
-import BACKEND_URL from '../../config/config'
+import BACKEND_URL from '../../../config/config'
 
 export class GetDishes extends Component {
     constructor( props ) {

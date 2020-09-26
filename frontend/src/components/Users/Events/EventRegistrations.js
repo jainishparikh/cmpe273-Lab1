@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import cookie from 'react-cookies';
 import axios from 'axios';
-import BACKEND_URL from '../../config/config'
+import BACKEND_URL from '../../../config/config'
 
 export class EventRegistrations extends Component {
     constructor( props ) {

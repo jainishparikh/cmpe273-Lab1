@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 import cookie from 'react-cookies';
 import Modal from 'react-modal';
 import axios from 'axios';
-import AddDish from './AddDishes';
-import GetDishes from './GetDishes';
-import BACKEND_URL from '../../config/config';
-import profile_picture from '../../images/restaurant.jpeg'
+import AddDish from '../Dishes/AddDishes';
+import GetDishes from '../Dishes/GetDishes';
+import BACKEND_URL from '../../../config/config';
+import profile_picture from '../../../images/restaurant.jpeg'
 
 export class RestaurantAbout extends Component {
     constructor( props ) {

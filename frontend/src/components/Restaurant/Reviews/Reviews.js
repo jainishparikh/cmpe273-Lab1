@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router';
 import cookie from 'react-cookies';
 import axios from 'axios';
-import BACKEND_URL from '../../config/config';
+import BACKEND_URL from '../../../config/config';
 import IndividualReview from './IndividualReview';
 
 export class Reviews extends Component {

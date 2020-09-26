@@ -3,7 +3,7 @@ import { Redirect } from 'react-router';
 import cookie from 'react-cookies';
 import axios from 'axios';
 import IndividualEvent from './IndividualEvent';
-import BACKEND_URL from '../../config/config';
+import BACKEND_URL from '../../../config/config';
 import Modal from 'react-modal';
 import PostEvent from './PostEvent';
 export class Events extends Component {

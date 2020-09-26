@@ -3,8 +3,8 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom'
 import cookie from 'react-cookies';
 import axios from 'axios';
-import profile_picture from '../../images/profile.png';
-import BACKEND_URL from '../../config/config'
+import profile_picture from '../../../images/profile.png';
+import BACKEND_URL from '../../../config/config'
 
 export class UserProfile extends Component {
     constructor( props ) {

@@ -4,33 +4,46 @@ import { Link } from 'react-router-dom';
 import cookie from 'react-cookies';
 import axios from 'axios';
 import ReactModal from 'react-modal';
-import BACKEND_URL from '../../config/config'
+import BACKEND_URL from '../../../config/config'
+
 
 export class Profile extends Component {
     constructor( props ) {
         super( props )
         if ( this.props.location.state ) {
             this.state = {
-                restaurantID: this.props.location.state.userData.restaurantID,
+                userID: this.props.location.state.userData.userID,
                 name: this.props.location.state.userData.name,
+                nickName: this.props.location.state.userData.nickName,
                 email: this.props.location.state.userData.email,
-                contact: this.props.location.state.userData.contact,
-                location: this.props.location.state.userData.location,
-                description: this.props.location.state.userData.description,
-                timing: this.props.location.state.userData.timing,
+                contactNumber: this.props.location.state.userData.contactNumber,
+                dateOfBirth: this.props.location.state.userData.dateOfBirth,
+                city: this.props.location.state.userData.city,
+                state: this.props.location.state.userData.state,
+                country: this.props.location.state.userData.country,
+                headline: this.props.location.state.userData.headline,
+                yelpingSince: this.props.location.state.userData.yelpingSince,
+                thingsILove: this.props.location.state.userData.thingsILove,
+                blogLink: this.props.location.state.userData.blogLink,
                 profileImageUpdate: false,
                 newProfileImage: "",
                 profileImagePath: "",
             }
         } else {
             this.state = {
-                restaurantID: "",
+                userID: "",
                 name: "",
+                nickName: "",
                 email: "",
-                contact: "",
-                location: "",
-                description: "",
-                timing: "",
+                contactNumber: "",
+                dateOfBirth: "",
+                city: "",
+                state: "",
+                country: "",
+                headline: "",
+                yelpingSince: "",
+                thingsILove: "",
+                blogLink: "",
                 profileImageUpdate: false,
                 newProfileImage: "",
                 profileImagePath: "",
@@ -49,7 +62,7 @@ export class Profile extends Component {
         e.preventDefault();
         console.log( "in handle submit" )
         axios
-            .put( BACKEND_URL + "/restaurants/about", this.state ).then( response => {
+            .put( BACKEND_URL + "/users/about", this.state ).then( response => {
                 if ( response.status === 200 ) {
 
                     if ( cookie.load( 'email' ) !== this.state.email ) {
@@ -72,7 +85,7 @@ export class Profile extends Component {
                             maxAge: 90000
                         } )
                     }
-                    window.location.assign( "/restaurants/about" );
+                    window.location.assign( "/users/about" );
                 }
 
             } ).catch( err => {
@@ -95,6 +108,7 @@ export class Profile extends Component {
             newProfileImage: e.target.files[ 0 ]
         } )
     }
+
     //Image Submit
     handleImageSubmit = ( e ) => {
         e.preventDefault();
@@ -102,7 +116,7 @@ export class Profile extends Component {
         console.log( this.state.newProfileImage );
         const formData = new FormData();
         formData.append( 'myImage', this.state.newProfileImage, this.state.newProfileImage.name )
-        formData.append( 'restaurantID', this.state.restaurantID )
+        formData.append( 'userID', this.state.userID )
         const config = {
             headers: {
                 'content-type': 'multipart/form-data'
@@ -121,7 +135,6 @@ export class Profile extends Component {
 
     }
 
-
     render () {
         var redirectVar = null;
         if ( !cookie.load( "auth" ) ) {
@@ -131,11 +144,15 @@ export class Profile extends Component {
             <div>
                 { redirectVar }
                 <div className="container-fluid" style={ { height: "100vh" } }>
-                    <div className="row h-100 mt-5">
+                    <div className="row h-100 mt-2">
                         <div className="col-2">
-                            <h3>Edit Profile</h3>
+                            <div className="row" style={ { height: "40%" } }></div>
+                            <div className="row" style={ { height: "60%" } }>
+                                <h3>Edit Profile</h3>
+                            </div>
                         </div>
                         <div className="col-10">
+
                             <div className="row ml-3">
                                 <button className="btn btn-primary" onClick={ this.toggleImageUpdate }>Change Profile Picture</button>
                                 <ReactModal isOpen={ this.state.profileImageUpdate } >
@@ -156,10 +173,16 @@ export class Profile extends Component {
 
 
                                     </div>
+                                    <div className="col-5">
+                                        <label>Nick Name:</label>
+                                        <input type="text" className="form-control" name="nickName"
+                                            placeholder={ this.state.nickName } onChange={ this.handleInputChange } />
+
+                                    </div>
                                 </div>
 
                                 <div className="row m-1">
-                                    <div className="col-5">
+                                    <div className="col-10">
                                         <label>Email:</label>
                                         <input type="text" className="form-control" name="email"
                                             placeholder={ this.state.email } onChange={ this.handleInputChange } />
@@ -169,43 +192,77 @@ export class Profile extends Component {
                                 <div className="row m-1">
                                     <div className="col-5">
                                         <label>Contact Number:</label>
-                                        <input type="text" className="form-control" name="contact"
-                                            placeholder={ this.state.contact } onChange={ this.handleInputChange } />
+                                        <input type="text" className="form-control" name="contactNumber"
+                                            placeholder={ this.state.contactNumber } onChange={ this.handleInputChange } />
 
 
                                     </div>
                                     <div className="col-5">
-                                        <label>Location</label>
-                                        <input type="text" className="form-control" name="location"
-                                            placeholder={ this.state.location } onChange={ this.handleInputChange } />
+                                        <label>Date Of Birth: (YYYY-MM-DD)</label>
+                                        <input type="text" className="form-control" name="dateOfBirth"
+                                            placeholder={ this.state.dateOfBirth } onChange={ this.handleInputChange } />
+                                    </div>
+                                </div>
+                                <div className="row m-1">
+                                    <div className="col-3">
+                                        <label>City:</label>
+                                        <input type="text" className="form-control" name="city"
+                                            placeholder={ this.state.city } onChange={ this.handleInputChange } />
+
+
+                                    </div>
+                                    <div className="col-3">
+                                        <label>State:</label>
+                                        <input type="text" className="form-control" name="state"
+                                            placeholder={ this.state.state } onChange={ this.handleInputChange } />
+
+                                    </div>
+                                    <div className="col-3">
+                                        <label>Country:</label>
+                                        <input type="text" className="form-control" name="country"
+                                            placeholder={ this.state.country } onChange={ this.handleInputChange } />
+
+
                                     </div>
                                 </div>
                                 <div className="row m-1">
                                     <div className="col-10">
-                                        <label>Timing</label>
-                                        <input type="text" className="form-control" name="timing"
-                                            placeholder={ this.state.timing } onChange={ this.handleInputChange } />
+                                        <label>Headline:</label>
+                                        <input type="text" className="form-control" name="headline"
+                                            placeholder={ this.state.headline } onChange={ this.handleInputChange } />
                                     </div>
 
                                 </div>
                                 <div className="row m-1">
                                     <div className="col-10">
-                                        <label>Description</label>
-                                        <input type="text" className="form-control" name="description"
-                                            placeholder={ this.state.description } onChange={ this.handleInputChange } />
-
-
+                                        <label>Things I Love:</label>
+                                        <input type="text" className="form-control" name="thingsILove"
+                                            placeholder={ this.state.thingsILove } onChange={ this.handleInputChange } />
                                     </div>
 
                                 </div>
+                                <div className="row m-1">
+                                    <div className="col-10">
+                                        <label>Yelping Since:</label>
+                                        <input type="text" className="form-control" name="yelpingSince"
+                                            placeholder={ this.state.yelpingSince } onChange={ this.handleInputChange } />
+                                    </div>
 
+                                </div>
+                                <div className="row m-1">
+                                    <div className="col-10">
+                                        <label>Blog Link:</label>
+                                        <input type="text" className="form-control" name="blogLink"
+                                            placeholder={ this.state.blogLink } onChange={ this.handleInputChange } />
+                                    </div>
 
+                                </div>
                                 <div className="row mt-3 ml-1">
                                     <div className="col-2">
                                         <button type="submit" className="btn btn-primary">Update</button>
                                     </div>
                                     <div className="col-8">
-                                        <Link className="btn btn-danger" to="/restaurants/about">Cancel</Link>
+                                        <Link className="btn btn-danger" to="/users/about">Cancel</Link>
                                     </div>
 
                                 </div>

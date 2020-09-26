@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import AddDishes from './AddDishes';
 import Modal from 'react-modal';
-import BACKEND_URL from '../../config/config'
+import BACKEND_URL from '../../../config/config'
 
 export class IndividualDish extends Component {
     constructor( props ) {
