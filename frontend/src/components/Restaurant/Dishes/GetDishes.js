@@ -22,7 +22,11 @@ export class GetDishes extends Component {
     }
 
     componentDidMount () {
-        var restaurantID = cookie.load( "id" );
+        if ( cookie.load( 'type' ) === 'restaurants' ) {
+            var restaurantID = cookie.load( "id" );
+        } else {
+            var restaurantID = this.props.restaurantID;
+        }
         axios.get( BACKEND_URL + "/restaurants/dishes/" + restaurantID ).then( response => {
             if ( response.status === 200 ) {
                 let images = []
@@ -34,7 +38,7 @@ export class GetDishes extends Component {
 
                 } )
                 this.props.displayDishes( images )
-                console.log( this.state )
+                console.log( "get dishes", this.state )
 
             }
         } ).catch( err => {

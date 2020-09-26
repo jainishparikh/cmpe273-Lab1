@@ -9,7 +9,7 @@ router.post( '/signup', ( req, res ) => {
     var name = req.body.name;
     var email = req.body.email;
     var password = req.body.password;
-    var location = req.body.location;
+    var location = req.body.address;
 
 
     bcrypt.hash( password, 10, ( err, hash ) => {
@@ -69,7 +69,7 @@ router.post( '/login', ( req, res ) => {
 } );
 
 //get all restaurants
-router.get( '/restaurants/all', ( req, res ) => {
+router.get( '/all', ( req, res ) => {
     // var email = req.params.email;
     var sql = `select * from restaurants`;
     connection.query( sql, ( err, results ) => {

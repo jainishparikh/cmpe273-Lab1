@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 import cookie from 'react-cookies';
 import axios from 'axios';
 import profile_picture from '../../../images/profile.png';
-import BACKEND_URL from '../../../config/config'
-// import review from './Reviews';
+import BACKEND_URL from '../../../config/config';
+import GetReviews from '../Reviews/GetReviews';
 
 export class UserAbout extends Component {
     constructor( props ) {
@@ -141,7 +141,8 @@ export class UserAbout extends Component {
                             </div>
                             {/* reviews */ }
                             <div className="col-8" style={ { "padding": "0 15px", "border-left": "1px solid #e6e6e6" } }>
-                                Reviews
+                                <GetReviews reviewData={ this.state } />
+
                             </div>
 
 

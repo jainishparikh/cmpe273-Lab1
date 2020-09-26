@@ -22,35 +22,26 @@ export class IndividualDish extends Component {
 
 
         return (
-            <div >
-                <table>
-                    <tbody>
-                        <tr>
-                            <td ><h4>{ this.state.headline }</h4></td>
+            <div style={ { "padding-top": "20px" } }>
+                <div style={ { border: "1px solid gray", "padding-left": "10px" } }>
+                    <div className="row">
+                        <div className="col-8"><h2>{ this.props.reviewData.headline }</h2></div>
 
-                            <td><h6>{ this.state.date }</h6></td>
-                        </tr>
-                        <tr><td>
-                            { this.state.ratings }
-                        </td>
-                        </tr>
-                        <tr><td>
-                            { this.state.reviewText }
-                        </td>
-                            <td> - <h6>{ this.state.reviewerName }</h6></td></tr>
-                    </tbody>
-                </table>
+                        <div className="col-4">{ this.props.reviewData.date }</div>
+                    </div>
+                    <div className="row">
+
+                        <div className="col-8">{ this.props.reviewData.ratings }</div>
+                    </div>
+                    <div className="row">
+                        <div className="col-8">{ this.props.reviewData.reviewText }</div>
+                        <div className="col-4">- <h6>{ this.props.reviewData.reviewerName }</h6></div>
+                    </div>
+
+                </div>
             </div>
         )
-        var divStyle = {
-            h6: {
-                "text-align": "right"
-            }
-        }
-        var tableStyle = {
-            width: "100%",
-            border: "1px solis black"
-        }
+
     }
 
 }

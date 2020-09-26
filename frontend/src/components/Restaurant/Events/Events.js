@@ -54,8 +54,8 @@ export class Events extends Component {
                 <div className="container-fluid m-1" style={ { height: "100vh" } }>
                     <div className="row mt-10" >
                         <div className='col-2'>
-                            <div className="row mt-2" style={ { height: "30%" } }> <h2> Events Posted by You </h2></div>
-                            <div className="row mt-2" style={ { height: "70%" } }>
+                            <div className="row mt-2" style={ { height: "240px" } }> <h2> Events Posted by You </h2></div>
+                            <div className="row mt-2" style={ { height: "520px" } }>
                                 <div className="post-event m-2" >
                                     <button className="btn btn-primary" onClick={ this.togglepostEventPopUp }>Post Event</button>
                                 </div>

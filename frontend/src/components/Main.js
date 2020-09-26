@@ -8,7 +8,8 @@ import Logout from './Login/Logout';
 import UsersDashboard from './Users/Dashboard/Dashboard';
 import UserAbout from "./Users/Profile/About";
 import EditUserProfile from "./Users/Profile/Profile";
-import UserEvents from './Users/Events/Events'
+import UserEvents from './Users/Events/Events';
+import RestaurantProfile from './Users/Profile/RestaurantProfile';
 //restaurant
 import RestaurantDashboard from './Restaurant/Dashboard';
 import RestaurantAbout from "./Restaurant/Profile/About";
@@ -25,10 +26,13 @@ export class Main extends Component {
                 <Route path='/signup' component={ Signup } />
                 <Route path='/login' component={ Login } />
                 <Route path='/logout' component={ Logout } />
+
                 <Route path='/users/dashboard' component={ UsersDashboard } />
                 <Route path='/users/about' component={ UserAbout } />
                 <Route path='/users/editprofile' component={ EditUserProfile } />
                 <Route path='/users/events' component={ UserEvents } />
+                <Route path='/users/restaurantprofiles/:restaurantEmail/:restaurantID' component={ RestaurantProfile } />
+
                 <Route path='/restaurants/dashboard' component={ RestaurantDashboard } />
                 <Route path='/restaurants/about' component={ RestaurantAbout } />
                 <Route path='/restaurants/editprofile' component={ EditRestaurantProfile } />

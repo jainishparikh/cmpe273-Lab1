@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import AddDishes from './AddDishes';
 import Modal from 'react-modal';
 import BACKEND_URL from '../../../config/config'
+import cookie from 'react-cookies';
 
 export class IndividualDish extends Component {
     constructor( props ) {
@@ -34,7 +35,24 @@ export class IndividualDish extends Component {
     }
 
     render () {
+        let dishOption = null
+        if ( cookie.load( 'type' ) === 'restaurants' ) {
+            dishOption =
+                <div>
+                    <div className="edit-dish" >
+                        <button className="btn btn-primary" onClick={ this.toggleDishPopUp }>Edit Dish</button>
+                    </div>
 
+                    <Modal isOpen={ this.state.dishPopUp } >
+                        <AddDishes call="edit" dishData={ this.state } closePopUp={ this.toggleDishPopUp } />
+                    </Modal>
+                </div>
+        } else {
+            dishOption = <div className="edit-dish" >
+                <button className="btn btn-primary">Order</button>
+            </div>
+
+        }
 
 
         return (
@@ -51,14 +69,8 @@ export class IndividualDish extends Component {
                         <div className='row'><b>Description: </b>{ this.state.dishDescription }</div>
                     </div>
                     <div className="col-2">
-                        <div className="edit-dish" >
-                            <button className="btn btn-primary" onClick={ this.toggleDishPopUp }>Edit Dish</button>
-                        </div>
-                        {/* using react-modal for popup to add dish */ }
-                        <Modal isOpen={ this.state.dishPopUp } >
-                            <AddDishes call="edit" dishData={ this.state } closePopUp={ this.toggleDishPopUp } />
-                        </Modal>
 
+                        { dishOption }
                     </div>
 
                 </div>

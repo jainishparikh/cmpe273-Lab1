@@ -170,7 +170,7 @@ export class RestaurantAbout extends Component {
                             {/* Display dishes */ }
                             <div className="row">
                                 <div className="dishes">
-                                    <GetDishes displayDishes={ this.displayImageStore } />
+                                    <GetDishes type='restaurants' displayDishes={ this.displayImageStore } />
                                 </div>
                             </div>
 

@@ -70,7 +70,7 @@ export class PostEvent extends Component {
                                     placeholder={ this.state.eventName } onChange={ this.handleInputChange } />
                             </div>
                             <div className="col-3">
-                                Hashtags: <input type="text" className="form-control" name="Hashtags"
+                                Hashtags: <input type="text" className="form-control" name="hashtags"
                                     placeholder={ this.state.Hashtags } onChange={ this.handleInputChange } />
                             </div>
 

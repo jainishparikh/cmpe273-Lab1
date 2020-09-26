@@ -31,11 +31,13 @@ export class EventRegistrations extends Component {
 
             return (
                 <tr>
-                    <td>{ attendee.userName }</td>
-                    <td>{ attendee.userEmail }</td>
-                    <Link className="btn btn-primary" to={ `/restaurants/userprofiles/${ attendee.userEmail }` } >
-                        View Profile
+                    <td style={ { "padding": "10px", "border": "1px solid gray" } } >{ attendee.userName }</td>
+                    <td style={ { "padding": "10px", "border": "1px solid gray" } }>{ attendee.userEmail }</td>
+                    <td style={ { "padding": "10px", "border": "1px solid gray" } }>
+                        <Link className="btn btn-primary" to={ `/restaurants/userprofiles/${ attendee.userEmail }` } >
+                            View Profile
                     </Link>
+                    </td>
                 </tr>
             )
         } )
@@ -43,8 +45,10 @@ export class EventRegistrations extends Component {
             <div>
                 <div className="container">
                     <div className="details">
+                        <h2>List of Registered People:</h2>
                         <table>
                             <tbody>
+
                                 { details }
                             </tbody>
                         </table>
