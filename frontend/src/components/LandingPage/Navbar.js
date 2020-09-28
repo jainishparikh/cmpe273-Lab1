@@ -21,7 +21,7 @@ export class Navbar extends Component {
                                     <Link class="nav-link" to="/users/dashboard" style={ { color: 'white' } }>Dashboard</Link>
                                 </li>
                                 <li class="nav-item">
-                                    <Link class="nav-link" to="" style={ { color: 'white' } }>Orders</Link>
+                                    <Link class="nav-link" to="/users/orders" style={ { color: 'white' } }>Orders</Link>
                                 </li>
                                 <li class="nav-item">
                                     <Link class="nav-link" to="/users/events" style={ { color: 'white' } }>Events</Link>
@@ -56,7 +56,7 @@ export class Navbar extends Component {
                                     <Link class="nav-link" to="/restaurants/reviews" style={ { color: 'white' } }>Reviews</Link>
                                 </li>
                                 <li class="nav-item">
-                                    <Link class="nav-link" to="" style={ { color: 'white' } }>Orders</Link>
+                                    <Link class="nav-link" to="/restaurants/orders" style={ { color: 'white' } }>Orders</Link>
                                 </li>
                                 <li class="nav-item">
                                     <Link class="nav-link" to="/restaurants/events" style={ { color: 'white' } }>Events</Link>

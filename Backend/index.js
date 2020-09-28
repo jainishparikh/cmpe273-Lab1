@@ -9,6 +9,7 @@ var user = require( './user/routes' )
 var restaurant = require( './restaurant/routes' )
 var reviews = require( './reviews/routes' )
 var events = require( './events/routes' );
+var orders = require( './orders/routes' )
 var session = require( "express-session" );
 var cookieParser = require( "cookie-parser" );
 var multer = require( 'multer' );
@@ -76,6 +77,7 @@ app.use( '/users', user );
 app.use( '/restaurants', restaurant );
 app.use( '/reviews', reviews );
 app.use( '/events', events );
+app.use( '/orders', orders );
 
 
 //get index page

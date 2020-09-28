@@ -84,10 +84,25 @@ router.get( '/all', ( req, res ) => {
 } );
 
 
-//get about
+//get about by email
 router.get( '/about/:email', ( req, res ) => {
     var email = req.params.email;
     var sql = `select * from restaurants where email="${ email }"`;
+    connection.query( sql, ( err, results ) => {
+        if ( err ) {
+            console.log( err );
+            res.end( "Error:", err );
+        } else {
+            res.status( 200 ).send( JSON.stringify( results[ 0 ] ) );
+        }
+
+    } );
+} );
+
+//get about by id
+router.get( '/aboutbyID/:id', ( req, res ) => {
+    var id = req.params.id;
+    var sql = `select * from restaurants where restaurantID="${ id }"`;
     connection.query( sql, ( err, results ) => {
         if ( err ) {
             console.log( err );

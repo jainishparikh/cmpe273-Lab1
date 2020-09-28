@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import AddDishes from './AddDishes';
 import Modal from 'react-modal';
 import BACKEND_URL from '../../../config/config'
 import cookie from 'react-cookies';
@@ -15,7 +14,8 @@ export class IndividualDish extends Component {
             dishDescription: this.props.dishData.dishDescription,
             dishCategory: this.props.dishData.dishCategory,
             dishPicture: this.props.dishData.dishPicture,
-            dishPopUp: false
+            dishPopUp: false,
+            addedToOrder: false,
         }
     }
 
@@ -34,17 +34,31 @@ export class IndividualDish extends Component {
         )
     }
 
-    render () {
-        let dishOption =
-            <div>
-                <div className="edit-dish" >
-                    <button className="btn btn-primary" onClick={ this.toggleDishPopUp }>Edit Dish</button>
-                </div>
+    addToOrderIndividualDish = () => {
+        this.setState( {
+            addedToOrder: true
+        } )
+        this.props.addToOrder( this.state )
+    }
 
-                <Modal isOpen={ this.state.dishPopUp } >
-                    <AddDishes call="edit" dishData={ this.state } closePopUp={ this.toggleDishPopUp } />
-                </Modal>
+    removeFromOrderIndividualDish = () => {
+        this.setState( {
+            addedToOrder: false
+        } )
+        this.props.removeFromOrder( this.state.dishID )
+    }
+
+    render () {
+        let dishOption = null
+        if ( this.state.addedToOrder === false ) {
+            dishOption = <div className="add-to-order" >
+                <button onClick={ this.addToOrderIndividualDish } className="btn btn-primary">Add to Order</button>
             </div>
+        } else {
+            dishOption = <div className="add-to-order" >
+                <button onClick={ this.removeFromOrderIndividualDish } className="btn btn-primary">Remove</button>
+            </div>
+        }
 
 
         return (

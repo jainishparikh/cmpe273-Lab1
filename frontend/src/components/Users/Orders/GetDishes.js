@@ -22,8 +22,7 @@ export class GetDishes extends Component {
     }
 
     componentDidMount () {
-        var restaurantID = cookie.load( "id" );
-
+        var restaurantID = this.props.restaurantID;
         axios.get( BACKEND_URL + "/restaurants/dishes/" + restaurantID ).then( response => {
             if ( response.status === 200 ) {
                 let images = []
@@ -59,6 +58,14 @@ export class GetDishes extends Component {
         } )
     }
 
+    addToOrderGetDishes = ( dish ) => {
+        this.props.addToOrder( dish )
+    }
+
+    removeFromOrderGetDishes = ( dishID ) => {
+        this.props.removeFromOrder( dishID )
+    }
+
     render () {
         var redirectVar = null;
         if ( !cookie.load( "auth" ) ) {
@@ -66,7 +73,7 @@ export class GetDishes extends Component {
         }
         let details = this.state.Dishes.map( ( dish ) => {
             return (
-                <IndividualDish dishData={ dish } />
+                <IndividualDish removeFromOrder={ this.removeFromOrderGetDishes } addToOrder={ this.addToOrderGetDishes } dishData={ dish } />
             )
         } )
         return (

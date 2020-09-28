@@ -71,11 +71,34 @@ router.post( '/login', ( req, res ) => {
 } );
 
 //About
-//get user about
+//get user about by email 
 router.get( '/about/:email', ( req, res ) => {
     var email = req.params.email;
     console.log( req.body )
     var sql = `select * from users where email="${ email }"`;
+    connection.query( sql, ( err, results ) => {
+        if ( err ) {
+            console.log( err );
+            res.end( "Error:", err );
+        } else {
+            var data = {}
+            console.log( results[ 0 ] )
+            Object.keys( results[ 0 ] ).forEach( ( key ) => {
+                if ( key != "password" ) {
+                    data[ key ] = results[ 0 ][ key ]
+                }
+            } )
+            res.status( 200 ).send( JSON.stringify( data ) );
+        }
+
+    } );
+} );
+
+//get user about by id 
+router.get( '/aboutbyID/:id', ( req, res ) => {
+    var id = req.params.id;
+
+    var sql = `select * from users where userID="${ id }"`;
     connection.query( sql, ( err, results ) => {
         if ( err ) {
             console.log( err );

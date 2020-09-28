@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom'
 import cookie from 'react-cookies';
 import Modal from 'react-modal';
 import axios from 'axios';
-import GetDishes from '../../Restaurant/Dishes/GetDishes';
+import GetDishes from '../Orders/GetDishes';
+import OrderNow from '../Orders/OrderNow';
 import BACKEND_URL from '../../../config/config';
 import profile_picture from '../../../images/restaurant.jpeg';
 import AddReview from '../Reviews/AddReview'
@@ -23,7 +24,9 @@ export class RestaurantProfile extends Component {
             dishPopUp: false,
             profileImagePath: profile_picture,
             images: [],
+            Orders: [],
             reviewPopUp: false,
+            orderPopUp: false,
         }
 
     }
@@ -60,17 +63,42 @@ export class RestaurantProfile extends Component {
         } );
     }
 
+    //change state to toggle review popup
     toggleReviewPopUp = ( e ) => {
         this.setState( {
             reviewPopUp: !this.state.reviewPopUp
         } )
     }
+
+    //change statetoggle order now popup
+    toggleOrderPopUp = ( e ) => {
+        this.setState( {
+            orderPopUp: !this.state.orderPopUp
+        } )
+    }
+
+    //function to getDIsh Images and store into Images array to display together
     displayImageStore = ( imageArray ) => {
         this.setState( {
             images: [ ...imageArray ]
         } )
     }
 
+    //function to get dishes and add to orders from -->GetDishes-->IndividualDish
+    addToOrderProfile = ( dish ) => {
+        this.setState( {
+            Orders: [ ...this.state.Orders, dish ]
+        } )
+
+    }
+
+    removeFromOrderProfile = ( dishID ) => {
+        let newOrders = this.state.Orders.filter( dish => dish.dishID !== dishID )
+        console.log( "new orders", newOrders );
+        this.setState( {
+            Orders: [ ...newOrders ]
+        } )
+    }
 
     render () {
         var redirectVar = null;
@@ -79,7 +107,6 @@ export class RestaurantProfile extends Component {
         }
 
         let displayDishImages = this.state.images.map( ( image ) => {
-            console.log( "images,", image )
             var dishImagePath = BACKEND_URL + "/images/dishes/" + image
             return (
                 <img src={ dishImagePath } style={ { "margin": "10px" } } width="200px" height="90%" alt="" />
@@ -91,13 +118,15 @@ export class RestaurantProfile extends Component {
                 { redirectVar }
                 <div className="container-fluid m-1" style={ { height: "100vh" } }>
                     <div className="row mt-2 mb-2 ml-5">
+                        {/* Back to Dashboard */ }
                         <div className="col-3">
                             <Link className="btn btn-primary" to="/users/dashboard"  >
                                 Back to Dashboard
                         </Link>
                         </div>
+                        {/* Gove a Review */ }
                         <div className="col-7">
-                            <div className="add-dish" >
+                            <div className="add-review" >
                                 <button className="btn btn-primary" onClick={ this.toggleReviewPopUp }>Give a Review</button>
                             </div>
 
@@ -105,11 +134,16 @@ export class RestaurantProfile extends Component {
                                 <AddReview reviewData={ this.state } closePopUp={ this.toggleReviewPopUp } />
                             </Modal>
                         </div>
+                        {/* Order Now */ }
                         <div className="col-2">
+                            <div className="add-review" >
+                                <button className="btn btn-primary" onClick={ this.toggleOrderPopUp }>Order Now</button>
+                            </div>
 
-                            <Link className="btn btn-primary" to=""  >
-                                Order Now
-                        </Link>
+                            <Modal isOpen={ this.state.orderPopUp } >
+                                <OrderNow orderData={ this.state } closePopUp={ this.toggleOrderPopUp } />
+                            </Modal>
+
                         </div>
                     </div>
                     <div className="row">
@@ -149,7 +183,7 @@ export class RestaurantProfile extends Component {
                             {/* Display dishes */ }
                             <div className="row">
                                 <div className="dishes">
-                                    <GetDishes type="users" restaurantID={ this.props.match.params.restaurantID } displayDishes={ this.displayImageStore } />
+                                    <GetDishes removeFromOrder={ this.removeFromOrderProfile } addToOrder={ this.addToOrderProfile } restaurantID={ this.props.match.params.restaurantID } displayDishes={ this.displayImageStore } />
                                 </div>
                             </div>
 

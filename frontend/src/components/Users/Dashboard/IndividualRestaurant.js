@@ -27,23 +27,25 @@ export class IndividualRestaurant extends Component {
 
     render () {
         return (
-            <div>
-                <div className="row p-1 m-2" style={ { "width": "100%", "height": "200px", "border": "1px gray solid" } }>
-                    <div className="col-4">
+            <div style={ { "padding-top": "20px" } }>
+                <div className="row" style={ { "width": "100%", "height": "180px", "border": "1px gray solid" } }>
+                    <div className="col-4" style={ { "padding-left": "0px" } }>
                         { this.displayPicture( this.props.restaurantData.profilePicture ) }
                     </div>
                     <div className='col-6'>
-                        <div className='row'><h3>{ this.props.restaurantData.name }</h3></div>
-                        <div className='row'>{ this.props.restaurantData.location }</div>
-                        <div className='row'>{ this.props.restaurantData.description }</div>
-                        <div className='row'>{ this.props.restaurantData.timing }</div>
+                        <ul style={ { "list-style-type": "none", "paddinf-left": "0px" } }>
+                            <li><h3>{ this.props.restaurantData.name }</h3></li>
+                            <li>{ this.props.restaurantData.location }</li>
+                            <li>{ this.props.restaurantData.description }</li>
+                            <li>{ this.props.restaurantData.timing }</li>
+                        </ul>
+
                     </div>
                     <div className="col-2">
-                        <Link className="btn btn-primary" to={ `/users/restaurantprofiles/${ this.props.restaurantData.email }/${ this.props.restaurantData.restaurantID }` } >
+                        <Link className="btn btn-danger" to={ `/users/restaurantprofiles/${ this.props.restaurantData.email }/${ this.props.restaurantData.restaurantID }` } >
                             View Restaurant
                     </Link>
                     </div>
-
                 </div>
             </div>
         )
