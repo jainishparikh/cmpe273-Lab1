@@ -28,6 +28,7 @@ export class Profile extends Component {
                 profileImageUpdate: false,
                 newProfileImage: "",
                 profileImagePath: "",
+                error: false
             }
         } else {
             this.state = {
@@ -47,51 +48,87 @@ export class Profile extends Component {
                 profileImageUpdate: false,
                 newProfileImage: "",
                 profileImagePath: "",
+                error: false
             }
         }
     }
-    //handle input change
-    handleInputChange = inp => {
+
+    handleOtherChange = inp => {
         // console.log( inp.target.name, inp.target.value );
         this.setState( {
             [ inp.target.name ]: inp.target.value
         } )
+
+    }
+
+    //handle input change
+    handleInputChange = inp => {
+        // console.log( inp.target.name, inp.target.value );
+        if ( /[~`!#$@%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test( inp.target.value ) ) {
+            this.setState( {
+                error: true,
+                errorMessage: "Special characters not allowed",
+                [ inp.target.name ]: ""
+            } )
+        } else {
+            this.setState( {
+                error: false,
+                [ inp.target.name ]: inp.target.value
+            } )
+        }
+    }
+
+    handleEmailChange = inp => {
+        // console.log( inp.target.name, inp.target.value );
+        if ( /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test( inp.target.value ) ) {
+            this.setState( {
+                error: true,
+                errorMessage: "Special characters not allowed",
+                [ inp.target.name ]: ""
+            } )
+        } else {
+            this.setState( {
+                error: false,
+                [ inp.target.name ]: inp.target.value
+            } )
+        }
     }
 
     handleOnSubmit = e => {
         e.preventDefault();
         console.log( "in handle submit" )
-        axios
-            .put( BACKEND_URL + "/users/about", this.state ).then( response => {
-                if ( response.status === 200 ) {
+        if ( !this.state.error ) {
+            axios
+                .put( BACKEND_URL + "/users/about", this.state ).then( response => {
+                    if ( response.status === 200 ) {
 
-                    if ( cookie.load( 'email' ) !== this.state.email ) {
-                        cookie.remove( "email", {
-                            path: '/'
-                        } );
-                        cookie.save( "email", this.state.email, {
-                            path: '/',
-                            httpOnly: false,
-                            maxAge: 90000
-                        } )
+                        if ( cookie.load( 'email' ) !== this.state.email ) {
+                            cookie.remove( "email", {
+                                path: '/'
+                            } );
+                            cookie.save( "email", this.state.email, {
+                                path: '/',
+                                httpOnly: false,
+                                maxAge: 90000
+                            } )
+                        }
+                        if ( cookie.load( 'name' ) !== this.state.name ) {
+                            cookie.remove( "name", {
+                                path: '/'
+                            } );
+                            cookie.save( "name", this.state.name, {
+                                path: '/',
+                                httpOnly: false,
+                                maxAge: 90000
+                            } )
+                        }
+                        window.location.assign( "/users/about" );
                     }
-                    if ( cookie.load( 'name' ) !== this.state.name ) {
-                        cookie.remove( "name", {
-                            path: '/'
-                        } );
-                        cookie.save( "name", this.state.name, {
-                            path: '/',
-                            httpOnly: false,
-                            maxAge: 90000
-                        } )
-                    }
-                    window.location.assign( "/users/about" );
-                }
 
-            } ).catch( err => {
-                console.log( "error in updating profile" );
-            } )
-
+                } ).catch( err => {
+                    console.log( "error in updating profile" );
+                } )
+        }
 
     }
 
@@ -135,10 +172,16 @@ export class Profile extends Component {
 
     }
 
+
+
     render () {
         var redirectVar = null;
         if ( !cookie.load( "auth" ) ) {
             redirectVar = <Redirect to="/login" />
+        }
+        let renderError = null
+        if ( this.state.error ) {
+            renderError = <div style={ { 'color': 'red' } }>{ this.state.errorMessage }</div>
         }
         return (
             <div>
@@ -176,7 +219,7 @@ export class Profile extends Component {
                                     <div className="col-5">
                                         <label>Nick Name:</label>
                                         <input type="text" className="form-control" name="nickName"
-                                            placeholder={ this.state.nickName } onChange={ this.handleInputChange } />
+                                            placeholder={ this.state.nickName } onChange={ this.handleOtherChange } />
 
                                     </div>
                                 </div>
@@ -185,7 +228,7 @@ export class Profile extends Component {
                                     <div className="col-10">
                                         <label>Email:</label>
                                         <input type="text" className="form-control" name="email"
-                                            placeholder={ this.state.email } onChange={ this.handleInputChange } />
+                                            placeholder={ this.state.email } onChange={ this.handleEmailChange } />
                                     </div>
 
                                 </div>
@@ -199,8 +242,8 @@ export class Profile extends Component {
                                     </div>
                                     <div className="col-5">
                                         <label>Date Of Birth: (YYYY-MM-DD)</label>
-                                        <input type="text" className="form-control" name="dateOfBirth"
-                                            placeholder={ this.state.dateOfBirth } onChange={ this.handleInputChange } />
+                                        <input type="date" className="form-control" name="dateOfBirth"
+                                            placeholder={ this.state.dateOfBirth } onChange={ this.handleOtherChange } />
                                     </div>
                                 </div>
                                 <div className="row m-1">
@@ -229,7 +272,7 @@ export class Profile extends Component {
                                     <div className="col-10">
                                         <label>Headline:</label>
                                         <input type="text" className="form-control" name="headline"
-                                            placeholder={ this.state.headline } onChange={ this.handleInputChange } />
+                                            placeholder={ this.state.headline } onChange={ this.handleOtherChange } />
                                     </div>
 
                                 </div>
@@ -237,7 +280,7 @@ export class Profile extends Component {
                                     <div className="col-10">
                                         <label>Things I Love:</label>
                                         <input type="text" className="form-control" name="thingsILove"
-                                            placeholder={ this.state.thingsILove } onChange={ this.handleInputChange } />
+                                            placeholder={ this.state.thingsILove } onChange={ this.handleOtherChange } />
                                     </div>
 
                                 </div>
@@ -253,7 +296,7 @@ export class Profile extends Component {
                                     <div className="col-10">
                                         <label>Blog Link:</label>
                                         <input type="text" className="form-control" name="blogLink"
-                                            placeholder={ this.state.blogLink } onChange={ this.handleInputChange } />
+                                            placeholder={ this.state.blogLink } onChange={ this.handleOtherChange } />
                                     </div>
 
                                 </div>
@@ -267,6 +310,7 @@ export class Profile extends Component {
 
                                 </div>
                             </form>
+                            { renderError }
                         </div>
                     </div>
                 </div>

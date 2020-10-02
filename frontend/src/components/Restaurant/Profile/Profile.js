@@ -22,6 +22,8 @@ export class Profile extends Component {
                 profileImageUpdate: false,
                 newProfileImage: "",
                 profileImagePath: "",
+                error: false,
+                errorMessage: ""
             }
         } else {
             this.state = {
@@ -35,52 +37,90 @@ export class Profile extends Component {
                 profileImageUpdate: false,
                 newProfileImage: "",
                 profileImagePath: "",
+                error: false,
+                errorMessage: ""
             }
         }
     }
-    //handle input change
-    handleInputChange = inp => {
+
+
+    handleOtherChange = inp => {
         // console.log( inp.target.name, inp.target.value );
         this.setState( {
             [ inp.target.name ]: inp.target.value
         } )
+
+    }
+
+    //handle input change
+    handleInputChange = inp => {
+        // console.log( inp.target.name, inp.target.value );
+        if ( /[~`!#$@%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test( inp.target.value ) ) {
+            this.setState( {
+                error: true,
+                errorMessage: "Special characters not allowed",
+                [ inp.target.name ]: ""
+            } )
+        } else {
+            this.setState( {
+                error: false,
+                [ inp.target.name ]: inp.target.value
+            } )
+        }
+    }
+
+    handleEmailChange = inp => {
+        // console.log( inp.target.name, inp.target.value );
+        if ( /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test( inp.target.value ) ) {
+            this.setState( {
+                error: true,
+                errorMessage: "Special characters not allowed",
+                [ inp.target.name ]: ""
+            } )
+        } else {
+            this.setState( {
+                error: false,
+                [ inp.target.name ]: inp.target.value
+            } )
+        }
     }
 
     handleOnSubmit = e => {
         e.preventDefault();
         console.log( "in handle submit" )
-        axios
-            .put( BACKEND_URL + "/restaurants/about", this.state ).then( response => {
-                if ( response.status === 200 ) {
+        if ( !this.state.error ) {
+            axios
+                .put( BACKEND_URL + "/restaurants/about", this.state ).then( response => {
+                    if ( response.status === 200 ) {
 
-                    if ( cookie.load( 'email' ) !== this.state.email ) {
-                        cookie.remove( "email", {
-                            path: '/'
-                        } );
-                        cookie.save( "email", this.state.email, {
-                            path: '/',
-                            httpOnly: false,
-                            maxAge: 90000
-                        } )
+                        if ( cookie.load( 'email' ) !== this.state.email ) {
+                            cookie.remove( "email", {
+                                path: '/'
+                            } );
+                            cookie.save( "email", this.state.email, {
+                                path: '/',
+                                httpOnly: false,
+                                maxAge: 90000
+                            } )
+                        }
+                        if ( cookie.load( 'name' ) !== this.state.name ) {
+                            cookie.remove( "name", {
+                                path: '/'
+                            } );
+                            cookie.save( "name", this.state.name, {
+                                path: '/',
+                                httpOnly: false,
+                                maxAge: 90000
+                            } )
+                        }
+                        window.location.assign( "/restaurants/about" );
                     }
-                    if ( cookie.load( 'name' ) !== this.state.name ) {
-                        cookie.remove( "name", {
-                            path: '/'
-                        } );
-                        cookie.save( "name", this.state.name, {
-                            path: '/',
-                            httpOnly: false,
-                            maxAge: 90000
-                        } )
-                    }
-                    window.location.assign( "/restaurants/about" );
-                }
 
-            } ).catch( err => {
-                console.log( "error in updating profile" );
-            } )
+                } ).catch( err => {
+                    console.log( "error in updating profile" );
+                } )
 
-
+        }
     }
 
     //Image Upload toggle
@@ -128,6 +168,10 @@ export class Profile extends Component {
         if ( !cookie.load( "auth" ) ) {
             redirectVar = <Redirect to="/login" />
         }
+        let renderError = null
+        if ( this.state.error ) {
+            renderError = <div style={ { 'color': 'red' } }>{ this.state.errorMessage }</div>
+        }
         return (
             <div>
                 { redirectVar }
@@ -163,11 +207,11 @@ export class Profile extends Component {
                                     <div className="col-5">
                                         <label>Email:</label>
                                         <input type="text" className="form-control" name="email"
-                                            placeholder={ this.state.email } onChange={ this.handleInputChange } />
+                                            placeholder={ this.state.email } onChange={ this.handleEmailChange } />
                                     </div>
                                     <div className="col-5">
                                         <label>Type:</label>
-                                        <select onChange={ this.handleInputChange } name="restaurantType" id="type">
+                                        <select defaultValue="Dine In" onChange={ this.handleOtherChange } name="restaurantType" id="type">
                                             <option value="Dine In">Dine In</option>
                                             <option value="Pick Up">Pick Up</option>
                                             <option value="Delivery">Delivery</option>
@@ -196,7 +240,7 @@ export class Profile extends Component {
                                     <div className="col-10">
                                         <label>Timing</label>
                                         <input type="text" className="form-control" name="timing"
-                                            placeholder={ this.state.timing } onChange={ this.handleInputChange } />
+                                            placeholder={ this.state.timing } onChange={ this.handleOtherChange } />
                                     </div>
 
                                 </div>
@@ -204,7 +248,7 @@ export class Profile extends Component {
                                     <div className="col-10">
                                         <label>Description</label>
                                         <input type="text" className="form-control" name="description"
-                                            placeholder={ this.state.description } onChange={ this.handleInputChange } />
+                                            placeholder={ this.state.description } onChange={ this.handleOtherChange } />
 
 
                                     </div>
@@ -222,6 +266,7 @@ export class Profile extends Component {
 
                                 </div>
                             </form>
+                            { renderError }
                         </div>
                     </div>
                 </div>

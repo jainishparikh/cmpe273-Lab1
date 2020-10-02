@@ -22,6 +22,9 @@ export class AddReview extends Component {
             [ inp.target.name ]: inp.target.value
         } )
     }
+
+
+
     handleOnSubmit = sub => {
         sub.preventDefault()
         var data = {
@@ -60,7 +63,7 @@ export class AddReview extends Component {
                                 onChange={ this.handleInputChange } />
                         </div>
                         <div className="col-3">
-                            Date:<input type="text" className="form-control" name="date"
+                            Date:<input type="date" className="form-control" name="date"
                                 onChange={ this.handleInputChange } />
                         </div>
                     </div>

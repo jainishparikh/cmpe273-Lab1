@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom'
 import cookie from 'react-cookies';
 import axios from 'axios';
 import profile_picture from '../../../images/profile.png';
-import BACKEND_URL from '../../../config/config'
+import BACKEND_URL from '../../../config/config';
+import GetReviews from '../Reviews/GetReviews';
 
 export class UserProfile extends Component {
     constructor( props ) {
@@ -74,6 +75,11 @@ export class UserProfile extends Component {
         if ( !cookie.load( "auth" ) ) {
             redirectVar = <Redirect to="/login" />
         }
+
+        let displayReviews = <div className="col-8" style={ { "padding": "0 15px", "border-left": "1px solid #e6e6e6" } }>
+            <GetReviews userID={ this.props.match.params.userID } />
+
+        </div>
         return (
             <div>
                 { redirectVar }
@@ -128,6 +134,10 @@ export class UserProfile extends Component {
                             </div>
 
 
+                        </div>
+                        <div className="row">
+                            <div className="col-4"></div>
+                            { displayReviews }
                         </div>
 
 

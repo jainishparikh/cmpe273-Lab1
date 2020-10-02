@@ -41,7 +41,10 @@ export class Orders extends Component {
 
     render () {
         let filteredOrders = this.state.Orders.filter( order => this.state.orderStatusFilter === "All" || order.orderStatus === this.state.orderStatusFilter )
-        let order = filteredOrders.map( order => {
+        console.log( "filtered", filteredOrders )
+        let sortedOrders = filteredOrders.sort( ( a, b ) => b.orderID - a.orderID )
+        console.log( "sorted", sortedOrders )
+        let order = sortedOrders.map( order => {
             return (
                 <div>
                     <IndividualOrder orderData={ order } />

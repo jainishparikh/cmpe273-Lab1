@@ -40,11 +40,16 @@ export class IndividualOrder extends Component {
 
     // database call on Done to change staus in database
     updateStatusInOrders = () => {
-
-        var orderID = this.props.orderData.orderID
-        var data = {
-            orderStatus: this.state.updatedStatus
+        if ( this.state.updatedStatus === "" ) {
+            var data = {
+                orderStatus: "Order Received"
+            }
+        } else {
+            var data = {
+                orderStatus: this.state.updatedStatus
+            }
         }
+        var orderID = this.props.orderData.orderID
         console.log( orderID )
         axios.put( BACKEND_URL + '/orders/restaurants/update/' + orderID, data ).then( response => {
             this.toggleChangeStatus()
@@ -100,7 +105,7 @@ export class IndividualOrder extends Component {
                 Done
             </button>
             if ( this.props.orderData.orderMethod === "Delivery" ) {
-                orderStatus = <select onChange={ this.handleStatusChange } name="status" id="order">
+                orderStatus = <select defaultValue="Order Received" onChange={ this.handleStatusChange } name="status" id="order">
                     <option value="Order Received" >Order Received</option>
                     <option value="Preparing">Preparing</option>
                     <option value="On The Way">On The Way</option>
@@ -108,7 +113,7 @@ export class IndividualOrder extends Component {
 
                 </select>
             } else if ( this.props.orderData.orderMethod === "Pick Up" ) {
-                orderStatus = <select onChange={ this.handleStatusChange } name="status" id="order">
+                orderStatus = <select defaultValue="Order Received" onChange={ this.handleStatusChange } name="status" id="order">
                     <option value="Order Received">Order Received</option>
                     <option value="Preparing">Preparing</option>
                     <option value="Pick Up Ready">Pick Up Ready</option>
@@ -150,7 +155,7 @@ export class IndividualOrder extends Component {
                     </div>
                     <div className="col-2" style={ { "padding-right": "0px" } }>
                         <div className="row">
-                            <Link className="btn btn-primary" to={ `/restaurants/userprofiles/${ this.state.userData.email }` } >
+                            <Link className="btn btn-primary" to={ `/restaurants/userprofiles/${ this.state.userData.email }/${ this.props.orderData.ref_userID }` } >
                                 View Profile
                     </Link>
                         </div>

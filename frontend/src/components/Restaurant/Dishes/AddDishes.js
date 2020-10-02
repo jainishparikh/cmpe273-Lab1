@@ -188,29 +188,29 @@ export class AddDishes extends Component {
                         </div>
                         <div className="row mt-2">
                             <div className="col-3">
-                                Dish Name: <input type="text" className="form-control" name="dishName"
+                                Dish Name: <input type="text" className="form-control" name="dishName" required
                                     placeholder={ this.state.dishName } onChange={ this.handleInputChange } />
                             </div>
                             <div className="col-3">
-                                Dish Price: <input type="text" className="form-control" name="dishPrice"
+                                Dish Price: <input type="text" className="form-control" name="dishPrice" required
                                     placeholder={ this.state.dishPrice } onChange={ this.handleInputChange } />
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-6">
-                                Category:<input type="text" className="form-control" name="dishCategory"
+                                Category:<input type="text" className="form-control" name="dishCategory" required
                                     placeholder={ this.state.dishCategory } onChange={ this.handleInputChange } />
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-6">
-                                Description: <input type="text" className="form-control" name="dishDescription"
+                                Description: <input type="text" className="form-control" name="dishDescription" required
                                     placeholder={ this.state.dishDescription } onChange={ this.handleInputChange } />
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-6">
-                                Ingrediants: <input type="text" className="form-control" name="dishIngrediants"
+                                Ingrediants: <input type="text" className="form-control" name="dishIngrediants" required
                                     placeholder={ this.state.dishIngrediants } onChange={ this.handleInputChange } />
                             </div>
                         </div>

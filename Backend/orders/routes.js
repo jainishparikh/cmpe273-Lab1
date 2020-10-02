@@ -63,9 +63,13 @@ router.get( '/dishes/:dishData', ( req, res, callBack ) => {
     for ( i = 0; i < dishes.length; i++ ) {
         inData = inData.concat( dishes[ i ].ref_dishID, ',' )
     }
+    console.log( 'in data', inData )
+
     inData = inData.substring( 0, inData.length - 1 );
+    console.log( 'in data', inData )
 
     inData = inData.concat( ')' )
+    console.log( 'in data', inData )
     var sql = `select * from dishes where dishID IN ${ inData }`
     connection.query( sql, ( err, results ) => {
         if ( err ) {
@@ -86,7 +90,7 @@ router.post( '/users/placeOrder/addDishes', ( req, res ) => {
 
     orderItems.map( dish => {
         var dishID = dish.dishID;
-        var sql = `insert into orderMap(ref_orderID, ref_dishID, cancelled) values(?,?)`;
+        var sql = `insert into orderMap(ref_orderID, ref_dishID) values(?,?)`;
         var values = [ orderID, dishID ]
         connection.query( sql, values, ( err, results ) => {
             if ( err ) {
@@ -110,8 +114,16 @@ router.post( '/users/placeOrder', ( req, res ) => {
     var orderStatus = req.body.orderStatus;
     var orderMethod = req.body.orderMethod;
     var cancelled = "No";
-    var sql = `insert into orders(ref_restaurantID, ref_userID, orderStatus, orderMethod, cancelled) values(?,?,?,?,?)`;
-    var values = [ ref_restaurantID, ref_userID, orderStatus, orderMethod, cancelled ]
+    let ts = Date.now();
+
+    let date_ob = new Date( ts );
+    let date = date_ob.getDate().toString();
+    let month = ( date_ob.getMonth() + 1 ).toString();
+    let year = date_ob.getFullYear().toString();
+    let time = date_ob.getHours().toString() + "-" + date_ob.getMinutes().toString() + "-" + date_ob.getSeconds().toString();
+    let orderDate = year + "-" + month + "-" + date + "-" + time;
+    var sql = `insert into orders(ref_restaurantID, ref_userID, orderStatus, orderMethod, cancelled, orderDate) values(?,?,?,?,?,?)`;
+    var values = [ ref_restaurantID, ref_userID, orderStatus, orderMethod, cancelled, orderDate ]
     connection.query( sql, values, ( err, results, fields ) => {
         if ( err ) {
             console.log( err );

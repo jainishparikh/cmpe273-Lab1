@@ -6,10 +6,9 @@ export class Maps extends Component {
         super( props )
         this.state = {
             center: {
-                lat: 37.77,
-                lng: 238.41,
+                lat: 37.33,
+                lng: 121.88,
             },
-            locations: []
         }
 
     }
@@ -18,17 +17,17 @@ export class Maps extends Component {
 
 
     render () {
-        let data = this.props.restaurantData.map( restaurant => {
-            console.log( "restaurant", restaurant.name )
+        let locations = this.props.restaurantData.map( restaurant => {
+            console.log( "restaurant", restaurant.name, restaurant.latitude, restaurant.longitude )
 
             return (
-                <Marker name={ restaurant.name } position={ { lat: lat, lng: lng } } />
+                <Marker name={ restaurant.name } position={ { lat: restaurant.latitude, lng: restaurant.longitude } } />
             )
 
         } )
 
         return (
-            <div style={ { "margin-top": "20px", height: '70vh', width: '80%', "border": "1px solid gray" } }>
+            <div style={ { "marginTop": "20px", height: '70vh', width: '80%', "border": "1px solid gray" } }>
                 <Map
                     google={ this.props.google }
                     zoom={ 9 }
@@ -36,7 +35,7 @@ export class Maps extends Component {
                     initialCenter={ { lat: 37.77, lng: 238.41 } }
 
                 >
-                    { data }
+                    { locations }
                 </Map>
             </div>
         )

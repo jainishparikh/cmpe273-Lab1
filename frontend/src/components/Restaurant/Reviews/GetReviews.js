@@ -12,13 +12,14 @@ export class GetReviews extends Component {
         }
     }
     componentDidMount () {
-        var userID = cookie.load( 'id' )
+        var userID = this.props.userID
         axios.get( BACKEND_URL + '/reviews/getreviews/users/' + userID ).then( response => {
             response.data.map( ( review => {
                 this.setState( {
                     Reviews: [ ...this.state.Reviews, review ]
                 } )
             } ) )
+            console.log( this.state.Reviews )
         } ).catch( error => {
             console.log( "Error in getting reviews: ", error )
         } )

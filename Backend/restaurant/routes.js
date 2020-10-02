@@ -2,6 +2,12 @@ var express = require( 'express' );
 var bcrypt = require( 'bcrypt' );
 var router = express.Router();
 var connection = require( '../config/db_config' ).connection;
+var nodeGeocoder = require( 'node-geocoder' );
+
+let options = {
+    provider: 'openstreetmap'
+};
+let geoCoder = nodeGeocoder( options );
 
 //signup
 router.post( '/signup', ( req, res ) => {
@@ -10,24 +16,37 @@ router.post( '/signup', ( req, res ) => {
     var email = req.body.email;
     var password = req.body.password;
     var location = req.body.address;
+    var latitude = ""
+    var longitude = ""
+    var restaurantType = "All"
+
+    geoCoder.geocode( location )
+        .then( ( result ) => {
+            latitude = result[ 0 ].latitude
+            longitude = result[ 0 ].longitude
+            bcrypt.hash( password, 10, ( err, hash ) => {
+                var sql = `insert into restaurants(name,email,password,location, latitude, longitude, restaurantType) values(?,?,?,?,?,?,?)`;
+                var values = [ name, email, hash, location, latitude, longitude, restaurantType ];
+                connection.query( sql, values, ( err, results, fields ) => {
+                    if ( err ) {
+                        console.log( err );
+                        res.status( 400 ).send( 'Error' )
+                    } else {
+                        console.log( "RSS" )
+                        res.status( 200 ).send( "Restaurant signup successful" );
+                    }
+
+                } );
 
 
-    bcrypt.hash( password, 10, ( err, hash ) => {
-        var sql = `insert into restaurants(name,email,password,location) values(?,?,?,?)`;
-        var values = [ name, email, hash, location ];
-        connection.query( sql, values, ( err, results, fields ) => {
-            if ( err ) {
-                console.log( err );
-                res.status( 400 ).send( 'Error' )
-            } else {
-                console.log( "RSS" )
-                res.status( 200 ).send( "Restaurant signup successful" );
-            }
+            } );
 
+        } )
+        .catch( ( err ) => {
+            console.log( "error", err )
         } );
 
 
-    } );
 
 
 } );
@@ -124,18 +143,33 @@ router.put( '/about', ( req, res ) => {
     var contact = req.body.contact;
     var timing = req.body.timing;
     var restaurantType = req.body.restaurantType
+    var latitude = ""
+    var longitude = ""
+    console.log( restaurantType )
+    if ( restaurantType === "" || restaurantType === undefined ) {
+        restaurantType = "All"
+    }
+    geoCoder.geocode( location )
+        .then( ( result ) => {
+            latitude = result[ 0 ].latitude
+            longitude = result[ 0 ].longitude
+            var sql = `update restaurants set email=?,name=?,location=?,description=?,contact=?,timing=?, restaurantType=?, latitude=?, longitude=? where restaurantID=${ restaurantID }`;
+            var values = [ email, name, location, description, contact, timing, restaurantType, latitude, longitude ]
+            connection.query( sql, values, ( err, results ) => {
+                if ( err ) {
+                    console.log( err );
+                    res.end( "Error:", err );
+                } else {
+                    res.status( 200 ).send( JSON.stringify( results ) );
+                }
 
-    var sql = `update restaurants set email=?,name=?,location=?,description=?,contact=?,timing=?, restaurantType=? where restaurantID=${ restaurantID }`;
-    var values = [ email, name, location, description, contact, timing, restaurantType ]
-    connection.query( sql, values, ( err, results ) => {
-        if ( err ) {
-            console.log( err );
-            res.end( "Error:", err );
-        } else {
-            res.status( 200 ).send( JSON.stringify( results ) );
-        }
+            } );
 
-    } );
+        } )
+        .catch( ( err ) => {
+            console.log( "error", err )
+        } );
+
 } );
 
 

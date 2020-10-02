@@ -41,7 +41,7 @@ export class Main extends Component {
                 <Route path='/restaurants/editprofile' component={ EditRestaurantProfile } />
                 <Route path='/restaurants/reviews' component={ RestaurantReviews } />
                 <Route path='/restaurants/events' component={ RestaurantEvents } />
-                <Route path='/restaurants/userprofiles/:userEmail' component={ UserProfiles } />
+                <Route path='/restaurants/userprofiles/:userEmail/:userID' component={ UserProfiles } />
                 <Route path='/restaurants/orders' component={ RestaurantOrders } />
 
             </div>

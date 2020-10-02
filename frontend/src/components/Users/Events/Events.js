@@ -66,7 +66,14 @@ export class Events extends Component {
         let filteredEvents = this.state.Events.filter( ( event ) => {
             return event.eventName.toLowerCase().includes( this.state.searchInput.toLowerCase() )
         } )
-        let details = filteredEvents.map( event => {
+        let sortedEvents = filteredEvents.sort( ( a, b ) => {
+            let d1 = a.eventDate.split( "-" )
+            let date1 = d1[ 0 ] + d1[ 1 ] + d1[ 2 ]
+            let d2 = b.eventDate.split( "-" )
+            let date2 = d2[ 0 ] + d2[ 1 ] + d2[ 2 ]
+            return date1 - date2
+        } )
+        let details = sortedEvents.map( event => {
 
             return (
                 <IndividualEvent eventData={ event } />

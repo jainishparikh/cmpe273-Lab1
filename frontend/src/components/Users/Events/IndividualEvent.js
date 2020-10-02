@@ -35,9 +35,10 @@ export class IndividualEvent extends Component {
                             <div className="row">
 
                                 <div className="col-8">
-                                    <h4>{ this.props.eventData.eventName }</h4>
+                                    <h2>{ this.props.eventData.eventName }</h2>
                                 </div>
                                 <div className="col-4">
+                                    <h6>Time:</h6>
                                     { this.props.eventData.eventTime }
                                 </div>
                             </div>
@@ -46,6 +47,7 @@ export class IndividualEvent extends Component {
                                     { this.props.eventData.Hashtags }
                                 </div>
                                 <div className="col-4">
+                                    <h6>Date:</h6>
                                     { this.props.eventData.eventDate }
                                 </div>
 

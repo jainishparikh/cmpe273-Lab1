@@ -133,6 +133,7 @@ router.put( '/about', ( req, res ) => {
     var thingsILove = req.body.thingsILove;
     var blogLink = req.body.blogLink;
 
+    console.log( "dob", dateOfBirth )
     var sql = `update users set email=?,name=?,nickName=?,city=?,state=?,country=?,dateOfBirth=?,contactNumber=?,headline=?,yelpingSince=?,thingsILove=?,blogLink=? where userID=${ userID }`;
     var values = [ email, name, nickName, city, state, country, dateOfBirth, contactNumber, headline, yelpingSince, thingsILove, blogLink ]
     connection.query( sql, values, ( err, results ) => {

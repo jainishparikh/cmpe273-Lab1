@@ -22,6 +22,7 @@ export class IndividualOrder extends Component {
             this.setState( {
                 restaurantData: response.data
             } )
+            console.log( this.state.restaurantData )
 
         } ).catch( error => {
             console.log( "Erron in fetching restaurant data", error )
@@ -75,20 +76,30 @@ export class IndividualOrder extends Component {
 
         return (
             <div style={ { "padding-top": "20px" } }>
-                <div className="row  m-2" style={ { "width": "100%", "height": "235px", "border": "1px gray solid" } }>
+                <div className="row  m-2" style={ { "width": "100%", "height": "185px", "border": "1px gray solid" } }>
                     <div className="col-4" style={ { "padding": "0px" } }>
                         { this.displayPicture( this.state.restaurantData.profilePicture ) }
                     </div>
-                    <div className='col-5'>
+                    <div className='col-3'>
 
                         <ul style={ { "list-style-type": "none", "padding-left": "0px" } }>
                             <li><h2>{ this.state.restaurantData.name }</h2></li>
                             <li>{ this.state.restaurantData.description }</li>
                             <li>{ this.state.restaurantData.location }</li>
                             <li>{ this.state.restaurantData.contact }</li>
-                            <li style={ { "margin-top": "78px" } }>
-                                { cancel }
-                            </li>
+
+
+                        </ul>
+
+                    </div>
+                    <div className='col-2'>
+
+                        <ul style={ { "list-style-type": "none", "padding-left": "0px" } }>
+                            <li><h6>Placed On:</h6></li>
+                            <li><h6>Date:</h6></li>
+                            <li>{ ( this.props.orderData.orderDate ).split( 'T' )[ 0 ] }</li>
+                            <li><h6>Time:</h6></li>
+                            <li>{ ( ( this.props.orderData.orderDate ).split( 'T' )[ 1 ] ).slice( 0, -5 ) }</li>
 
                         </ul>
 
@@ -101,41 +112,45 @@ export class IndividualOrder extends Component {
                             <li>&nbsp;</li>
                             <li><h5>Delivery Type:</h5></li>
                             <li>{ this.props.orderData.orderMethod }</li>
-                            <li >
-                                <div className="view-details mt-2" >
-                                    <button className="btn btn-danger btn-block" onClick={ this.toggleDetailsPopUp }>View Details  &rarr; </button>
-                                </div>
-                                {/* using react-modal for popup to add dish */ }
-                                <Modal isOpen={ this.state.detailsPopUp } style={ {
-                                    overlay: {
-                                        position: 'fixed',
-                                        top: 0,
-                                        left: 0,
-                                        right: 0,
-                                        bottom: 0,
-                                        backgroundColor: 'rgba(255, 255, 255, 0.25)'
-                                    },
-                                    content: {
-                                        position: 'relative',
-                                        top: '20%',
-                                        left: '20%',
-                                        right: '20%',
-                                        bottom: '20%',
-                                        border: '2px solid #ccc',
-                                        background: '#fff',
-                                        overflow: 'auto',
-                                        WebkitOverflowScrolling: 'touch',
-                                        borderRadius: '4px',
-                                        outline: 'none',
-                                        padding: '20px'
-                                    }
-                                } } >
-                                    <OrderDetails orderData={ this.props.orderData.orderID } closePopUp={ this.toggleDetailsPopUp } />
-                                </Modal>
-                            </li>
+
                         </ul>
                     </div>
 
+                </div>
+                <div className="row">
+                    <div className="col-4"></div>
+                    <div className="col-5"> { cancel }</div>
+                    <div className="col-3">  <div className="view-details" >
+                        <button className="btn btn-danger btn-block" onClick={ this.toggleDetailsPopUp }>View Details  &rarr; </button>
+                    </div>
+                        {/* using react-modal for popup to add dish */ }
+                        <Modal isOpen={ this.state.detailsPopUp } style={ {
+                            overlay: {
+                                position: 'fixed',
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                bottom: 0,
+                                backgroundColor: 'rgba(255, 255, 255, 0.25)'
+                            },
+                            content: {
+                                position: 'relative',
+                                top: '20%',
+                                left: '20%',
+                                right: '20%',
+                                bottom: '20%',
+                                border: '2px solid #ccc',
+                                background: '#fff',
+                                overflow: 'auto',
+                                WebkitOverflowScrolling: 'touch',
+                                borderRadius: '4px',
+                                outline: 'none',
+                                padding: '20px'
+                            }
+                        } } >
+                            <OrderDetails orderData={ this.props.orderData.orderID } closePopUp={ this.toggleDetailsPopUp } />
+                        </Modal>
+                    </div>
                 </div>
             </div>
         )

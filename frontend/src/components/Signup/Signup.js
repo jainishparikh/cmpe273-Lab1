@@ -11,14 +11,48 @@ export class Signup extends Component {
             email: '',
             password: '',
             address: '',
-            error: false
+            error: false,
+            errorMessage: ""
+        }
+    }
+
+    handlePasswordChange = inp => {
+        this.setState( {
+            password: inp.target.value
+        } )
+
+    }
+
+    handleEmailChange = inp => {
+        // console.log( inp.target.name, inp.target.value );
+        if ( /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test( inp.target.value ) ) {
+            this.setState( {
+                error: true,
+                errorMessage: "Special characters not allowed",
+                [ inp.target.name ]: ""
+            } )
+        } else {
+            this.setState( {
+                error: false,
+                [ inp.target.name ]: inp.target.value
+            } )
         }
     }
     //handle input change
     handleInputChange = inp => {
-        this.setState( {
-            [ inp.target.name ]: inp.target.value
-        } )
+        // console.log( inp.target.name, inp.target.value );
+        if ( /[~`!#$@%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test( inp.target.value ) ) {
+            this.setState( {
+                error: true,
+                errorMessage: "Special characters not allowed",
+                [ inp.target.name ]: ""
+            } )
+        } else {
+            this.setState( {
+                error: false,
+                [ inp.target.name ]: inp.target.value
+            } )
+        }
     }
 
 
@@ -27,39 +61,47 @@ export class Signup extends Component {
         sub.preventDefault();
 
         console.log( this.state );
+        if ( this.state.type === "" ) {
+            this.setState( {
+                error: true,
+                errorMessage: "Please Select User or Restaurant"
+            } )
+        } else {
 
-        if ( this.state.type === 'users' ) {
-            axios
-                .post( BACKEND_URL + '/users/signup', this.state )
-                .then( ( response ) => {
-                    if ( response.status === 200 ) {
-                        window.location.assign( '/login' )
-                    }
 
-                } )
-                .catch( ( err ) => {
-                    this.setState( {
-                        error: true
+            if ( this.state.type === 'users' ) {
+                axios
+                    .post( BACKEND_URL + '/users/signup', this.state )
+                    .then( ( response ) => {
+                        if ( response.status === 200 ) {
+                            window.location.assign( '/login' )
+                        }
+
                     } )
+                    .catch( ( err ) => {
+                        this.setState( {
+                            error: true
+                        } )
 
-                } );
-        } else if ( this.state.type === 'restaurants' ) {
-            axios
-                .post( BACKEND_URL + '/restaurants/signup', this.state )
-                .then( ( response ) => {
-                    console.log( response )
-                    if ( response.status === 200 ) {
-                        console.log( "redirecting to login" )
-                        window.location.assign( '/login' )
-                    }
+                    } );
+            } else if ( this.state.type === 'restaurants' ) {
+                axios
+                    .post( BACKEND_URL + '/restaurants/signup', this.state )
+                    .then( ( response ) => {
+                        console.log( response )
+                        if ( response.status === 200 ) {
+                            console.log( "redirecting to login" )
+                            window.location.assign( '/login' )
+                        }
 
-                } ).catch( ( err ) => {
-                    console.log( "inside restaurant error" )
-                    this.setState( {
-                        error: true
-                    } )
+                    } ).catch( ( err ) => {
+                        console.log( "inside restaurant error" )
+                        this.setState( {
+                            error: true
+                        } )
 
-                } );
+                    } );
+            }
         }
     };
 
@@ -74,10 +116,13 @@ export class Signup extends Component {
     }
 
     render () {
-
+        let renderError = null
+        if ( this.state.error ) {
+            renderError = <div style={ { 'color': 'red' } }>{ this.state.errorMessage }</div>
+        }
         return (
             <div>
-                { this.renderError() }
+
                 <div className="container" style={ { height: "100vh" } }>
                     <div className="h-100">
                         <div className="upper" style={ { height: "30%" } }></div>
@@ -101,12 +146,12 @@ export class Signup extends Component {
                                     </div>
                                     <div className="form-group">
                                         <input type="text" className="form-control" name="email" required
-                                            placeholder="Enter Email" onChange={ this.handleInputChange } />
+                                            placeholder="Enter Email" onChange={ this.handleEmailChange } />
 
                                     </div>
                                     <div className="form-group">
                                         <input type="password" className="form-control" name="password" required
-                                            placeholder="Enter Password" onChange={ this.handleInputChange } />
+                                            placeholder="Enter Password" onChange={ this.handlePasswordChange } />
                                     </div>
                                     <div className="form-group">
                                         { this.state.type === 'restaurants' ? <input type="text" className="form-control" name="address" required
@@ -114,6 +159,7 @@ export class Signup extends Component {
                                     </div>
                                     <button type="submit" className="btn btn-primary" onSubmit={ this.handleSubmit }>Sign Up</button>
                                 </form>
+                                { renderError }
                                 <br></br>
                                 Already have an account? { <Link to="/login">Login</Link> }
                             </div>
