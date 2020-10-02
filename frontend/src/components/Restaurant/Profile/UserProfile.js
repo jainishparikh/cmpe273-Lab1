@@ -66,8 +66,8 @@ export class UserProfile extends Component {
         } );
     }
 
-    goBackToEvents = ( e ) => {
-        window.location.assign( "/restaurants/events" );
+    goBackTo = ( e ) => {
+        window.history.go( -1 );
     }
     render () {
         var redirectVar = null;
@@ -80,7 +80,8 @@ export class UserProfile extends Component {
                 <div className="container-fluid">
                     <div className="container-fluid" style={ { height: "100vh" } }>
                         <div className="row mt-2">
-                            <Link className="btn btn-primary" to="/restaurants/events">Back to Events</Link>
+                            {/* <Link className="btn btn-primary" to="/restaurants/events">Back to Events</Link> */ }
+                            <button className="btn btn-primary" onClick={ this.goBackTo }>Back</button>
                         </div>
                         <div className="row mt-3 mb-3" style={ { height: "30%", background: "whitesmoke" } }>
                             {/* profile picture */ }

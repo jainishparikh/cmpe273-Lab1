@@ -68,7 +68,7 @@ export class Login extends Component {
                     if ( this.state.type === 'users' ) {
                         window.location.assign( '/users/dashboard' );
                     } else if ( this.state.type === 'restaurants' ) {
-                        window.location.assign( '/restaurants/dashboard' );
+                        window.location.assign( '/restaurants/about' );
                     }
                 }
             } )

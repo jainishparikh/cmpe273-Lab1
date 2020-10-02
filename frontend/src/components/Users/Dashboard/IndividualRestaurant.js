@@ -36,6 +36,7 @@ export class IndividualRestaurant extends Component {
                         <ul style={ { "list-style-type": "none", "paddinf-left": "0px" } }>
                             <li><h3>{ this.props.restaurantData.name }</h3></li>
                             <li>{ this.props.restaurantData.location }</li>
+                            <li>{ this.props.restaurantData.restaurantType }</li>
                             <li>{ this.props.restaurantData.description }</li>
                             <li>{ this.props.restaurantData.timing }</li>
                         </ul>

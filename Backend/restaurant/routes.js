@@ -123,9 +123,10 @@ router.put( '/about', ( req, res ) => {
     var description = req.body.description;
     var contact = req.body.contact;
     var timing = req.body.timing;
+    var restaurantType = req.body.restaurantType
 
-    var sql = `update restaurants set email=?,name=?,location=?,description=?,contact=?,timing=? where restaurantID=${ restaurantID }`;
-    var values = [ email, name, location, description, contact, timing ]
+    var sql = `update restaurants set email=?,name=?,location=?,description=?,contact=?,timing=?, restaurantType=? where restaurantID=${ restaurantID }`;
+    var values = [ email, name, location, description, contact, timing, restaurantType ]
     connection.query( sql, values, ( err, results ) => {
         if ( err ) {
             console.log( err );

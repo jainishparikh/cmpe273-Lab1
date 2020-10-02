@@ -4,6 +4,7 @@ import cookie from "react-cookies";
 import axios from 'axios';
 import BACKEND_URL from '../../../config/config';
 import IndividualRestaurant from './IndividualRestaurant';
+import Maps from './Map';
 
 
 export class Dashboard extends Component {
@@ -11,7 +12,8 @@ export class Dashboard extends Component {
         super( props )
         this.state = {
             Restaurants: [],
-            searchInput: ""
+            searchInput: "",
+            typeFilter: "All",
 
         }
     }
@@ -23,7 +25,8 @@ export class Dashboard extends Component {
             response.data.map( ( restaurant ) => {
                 this.setState( {
                     Restaurants: [ ...this.state.Restaurants, restaurant ],
-                    searchInput: ""
+                    searchInput: "",
+
                 } )
 
             } )
@@ -34,6 +37,12 @@ export class Dashboard extends Component {
         } )
 
 
+    }
+    handleradioChange = ( e ) => {
+        console.log( e.target.value )
+        this.setState( {
+            typeFilter: e.target.value
+        } )
     }
 
     handleSearch = ( e ) => {
@@ -48,15 +57,20 @@ export class Dashboard extends Component {
         if ( !cookie.load( 'auth' ) ) {
             return <Redirect to='/login' />
         }
-        let filteredRestaurants = this.state.Restaurants.filter( ( restaurant ) => {
-            return restaurant.name.toLowerCase().includes( this.state.searchInput.toLowerCase() )
+        let searchedRestaurants = this.state.Restaurants.filter( ( restaurant ) => {
+            return restaurant.name.toLowerCase().includes( this.state.searchInput.toLowerCase() ) || restaurant.restaurantType.toLowerCase().includes( this.state.searchInput.toLowerCase() ) || restaurant.location.toLowerCase().includes( this.state.searchInput.toLowerCase() )
         } )
 
+        let filteredRestaurants = searchedRestaurants.filter( ( restaurant ) => {
+            return this.state.typeFilter === "All" || restaurant.restaurantType === null || restaurant.restaurantType === "" || restaurant.restaurantType === this.state.typeFilter
+        } )
         let restaurants = filteredRestaurants.map( restaurant => {
             return (
                 <IndividualRestaurant restaurantData={ restaurant } />
             )
         } )
+
+        let displayMap = <Maps restaurantData={ filteredRestaurants } />
         return (
 
             <div>
@@ -69,11 +83,20 @@ export class Dashboard extends Component {
 
                 </div>
                 <div className="row mt-2">
-                    <div className="col-2">Filters</div>
+                    <div className="col-2">
+                        <ul style={ { "list-style-type": "none" } }>
+                            <li> <h4>Filters : </h4></li>
+                            <li><input type="radio" name="filter" value="All" onChange={ this.handleradioChange } /> All</li>
+                            <li> <input type="radio" name="filter" value="Delivery" onChange={ this.handleradioChange } /> Delivery</li>
+                            <li>  <input type="radio" name="filter" value="Pick Up" onChange={ this.handleradioChange } /> Pick Up</li>
+
+                        </ul></div>
                     <div className="col-7">
                         { restaurants }
                     </div>
-                    <div className="col-3">Map</div>
+                    <div className="col-3">
+                        { displayMap }
+                    </div>
 
                 </div>
             </div>

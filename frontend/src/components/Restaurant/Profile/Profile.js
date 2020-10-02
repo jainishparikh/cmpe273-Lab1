@@ -18,6 +18,7 @@ export class Profile extends Component {
                 location: this.props.location.state.userData.location,
                 description: this.props.location.state.userData.description,
                 timing: this.props.location.state.userData.timing,
+                restaurantType: this.props.location.state.userData.restaurantType,
                 profileImageUpdate: false,
                 newProfileImage: "",
                 profileImagePath: "",
@@ -164,6 +165,17 @@ export class Profile extends Component {
                                         <input type="text" className="form-control" name="email"
                                             placeholder={ this.state.email } onChange={ this.handleInputChange } />
                                     </div>
+                                    <div className="col-5">
+                                        <label>Type:</label>
+                                        <select onChange={ this.handleInputChange } name="restaurantType" id="type">
+                                            <option value="Dine In">Dine In</option>
+                                            <option value="Pick Up">Pick Up</option>
+                                            <option value="Delivery">Delivery</option>
+                                            <option value="All">All</option>
+
+                                        </select>
+                                    </div>
+
 
                                 </div>
                                 <div className="row m-1">
