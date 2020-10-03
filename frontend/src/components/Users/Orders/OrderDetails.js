@@ -49,11 +49,11 @@ export class OrderDetails extends Component {
     render () {
         let dishes = this.state.Dishes.map( dish => {
             return (
-                <div>
+                <div style={ { "padding": "10px", "margin": "10px", "background": "whitesmoke" } }>
                     <div className="col-4">
                         { this.displayPicture( dish.dishPicture ) }
                     </div>
-                    <div className='col-6'>
+                    <div className='col-8'>
                         <div className='row'><h3>{ dish.dishName }</h3></div>
                         <div className='row'><b>Cost: </b>${ dish.dishPrice }</div>
                         <div className='row'><b>Category: </b>{ dish.dishCategory }</div>
@@ -66,10 +66,15 @@ export class OrderDetails extends Component {
         return (
             <div>
                 <div className="row">
-                    { dishes }
+                    <div className="col-4">
+                        <button className="btn btn-danger" onClick={ this.props.closePopUp }>Back </button>
+                    </div>
+                    <div className="col-4"><h1>Order Details</h1></div>
+                    <div className="col-4"></div>
                 </div>
-                <div className="row" >
-                    <button className="btn btn-danger" onClick={ this.props.closePopUp }>Back </button>
+
+                <div className="row">
+                    { dishes }
                 </div>
 
             </div>

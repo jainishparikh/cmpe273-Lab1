@@ -120,14 +120,14 @@ export class RestaurantProfile extends Component {
                     <div className="row mt-2 mb-2 ml-5">
                         {/* Back to Dashboard */ }
                         <div className="col-3">
-                            <Link className="btn btn-primary" to="/users/dashboard"  >
+                            <Link className="btn btn-danger" to="/users/dashboard"  >
                                 Back to Dashboard
                         </Link>
                         </div>
                         {/* Gove a Review */ }
                         <div className="col-7">
                             <div className="add-review" >
-                                <button className="btn btn-primary" onClick={ this.toggleReviewPopUp }>Give a Review</button>
+                                <button className="btn btn-danger" onClick={ this.toggleReviewPopUp }>Give a Review</button>
                             </div>
 
                             <Modal isOpen={ this.state.reviewPopUp } >
@@ -137,7 +137,7 @@ export class RestaurantProfile extends Component {
                         {/* Order Now */ }
                         <div className="col-2">
                             <div className="add-review" >
-                                <button className="btn btn-primary" onClick={ this.toggleOrderPopUp }>Order Now</button>
+                                <button className="btn btn-danger" onClick={ this.toggleOrderPopUp }>Order Now</button>
                             </div>
 
                             <Modal isOpen={ this.state.orderPopUp } >
@@ -147,7 +147,7 @@ export class RestaurantProfile extends Component {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-3" style={ { "border-right": "1px solid #e6e6e6" } }>
+                        <div className="col-3" style={ { "border-right": "1px solid #e6e6e6", "background": "whitesmoke" } }>
                             <ul style={ { "list-style-type": "none" } }>
                                 <li><img src={ this.state.profileImagePath } style={ { "border": "1px solid black" } } width="200px" height="90%" alt="" /></li>
                                 <li><h2>{ this.state.name }</h2></li>

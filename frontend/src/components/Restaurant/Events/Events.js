@@ -57,7 +57,7 @@ export class Events extends Component {
                             <div className="row mt-2" style={ { height: "240px" } }> <h2> Events Posted by You </h2></div>
                             <div className="row mt-2" style={ { height: "520px" } }>
                                 <div className="post-event m-2" >
-                                    <button className="btn btn-primary" onClick={ this.togglepostEventPopUp }>Post Event</button>
+                                    <button className="btn btn-danger" onClick={ this.togglepostEventPopUp }>Post Event</button>
                                 </div>
                                 {/* using react-modal for popup to add dish */ }
                                 <Modal isOpen={ this.state.postEventPopUp } style={ {

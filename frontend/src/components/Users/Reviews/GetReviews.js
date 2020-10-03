@@ -24,6 +24,7 @@ export class GetReviews extends Component {
         } )
     }
     render () {
+
         let displayReview = this.state.Reviews.map( review => {
             return (
 

@@ -89,36 +89,30 @@ export class UserAbout extends Component {
                             <div className="col-8" >
                                 <div className="row pt-4">
                                     <div className="col-8">
-                                        <table>
-                                            <tbody>
-                                                <tr></tr>
-                                                <tr>
-                                                    <td><h2>{ this.state.name }</h2></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><h5>{ this.state.city }, { this.state.state }</h5></td>
-                                                </tr>
-                                                <tr>&nbsp;</tr>
-                                                <tr>&nbsp;</tr>
-                                                <tr>
-                                                    <td>{ this.state.headline }</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        <ul style={ { "list-style-type": "none" } }>
+                                            <li><h2>{ this.state.name }</h2></li>
+                                            <li>&nbsp;</li>
+                                            <li><h5>{ this.state.city }, { this.state.state }</h5></li>
+                                            <li>{ this.state.thingsILove }&nbsp;</li>
+                                            <li>&nbsp;</li>
+                                            <li>&nbsp;</li>
+                                            <li>{ this.state.headline }&nbsp;</li>
+                                        </ul>
+
                                     </div>
 
                                     <div className="col-4" style={ { "padding": "0 15px", "border-left": "1px solid #e6e6e6" } }>
+                                        <ul style={ { "list-style-type": "none" } }>
+                                            <li><h5>Yelping Since:</h5></li>
+                                            <li>{ this.state.yelpingSince }&nbsp;</li>
+                                            <li>&nbsp;</li>
+                                            <li><h5>Things I Love:</h5></li>
+                                            <li>{ this.state.thingsILove }&nbsp;</li>
+                                            <li>&nbsp;</li>
+                                            <li><h5>Blog Link:</h5></li>
+                                            <li>{ this.state.blogLink }&nbsp;</li>
+                                        </ul>
 
-                                        <table>
-                                            <tbody>
-                                                <th>Yelping Since:</th>
-                                                <tr>{ this.state.yelpingSince }</tr>
-                                                <th>Things I Love:</th>
-                                                <tr>{ this.state.thingsILove }&nbsp;</tr>
-                                                <th>Blog Link:</th>
-                                                <tr>{ this.state.blogLink }&nbsp;</tr>
-                                            </tbody>
-                                        </table>
                                     </div>
                                 </div>
 

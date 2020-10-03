@@ -28,22 +28,24 @@ export class IndividualEvent extends Component {
         return (
             <div>
                 <div className="container pt-5" >
-                    <div className="row">
-                        <div className="col-8">
+                    <div className="row" style={ { "padding": "10px", "background": "whitesmoke" } }>
+                        <div className="col-9">
                             <div className="row">
 
                                 <div className="col-8">
-                                    <h4>{ this.state.eventName }</h4>
+                                    <h2>{ this.state.eventName }</h2>
                                 </div>
                                 <div className="col-4">
+                                    <h6>Time:</h6>
                                     { this.state.eventTime }
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="col-8">
+                                <div className="col-8" style={ { "color": "blue" } }>
                                     { this.state.Hashtags }
                                 </div>
                                 <div className="col-4">
+                                    <h6>Date:</h6>
                                     { this.state.eventDate }
                                 </div>
 
@@ -56,9 +58,9 @@ export class IndividualEvent extends Component {
 
                             </div>
                         </div>
-                        <div className="col-4">
+                        <div className="col-3">
                             <div className="post-event m-2" >
-                                <button className="btn btn-primary" onClick={ this.toggleRegistrationsPopUp }>View Registrations</button>
+                                <button className="btn btn-danger" onClick={ this.toggleRegistrationsPopUp }>View Registrations</button>
                             </div>
                             {/* using react-modal for popup to add dish */ }
                             <Modal isOpen={ this.state.registartionsPopUp } style={ {

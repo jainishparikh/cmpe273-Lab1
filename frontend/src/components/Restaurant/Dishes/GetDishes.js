@@ -72,7 +72,7 @@ export class GetDishes extends Component {
         return (
             <div>
                 { redirectVar }
-                <div className="container">
+                <div className="container" style={ { "width": "100%" } }>
                     {/* <table>
                         <thead></thead>
                         <tbody> */}

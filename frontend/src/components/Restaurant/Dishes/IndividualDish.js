@@ -38,7 +38,7 @@ export class IndividualDish extends Component {
         let dishOption =
             <div>
                 <div className="edit-dish" >
-                    <button className="btn btn-primary" onClick={ this.toggleDishPopUp }>Edit Dish</button>
+                    <button className="btn btn-danger" onClick={ this.toggleDishPopUp }>Edit Dish</button>
                 </div>
 
                 <Modal isOpen={ this.state.dishPopUp } >
@@ -49,7 +49,7 @@ export class IndividualDish extends Component {
 
         return (
             <div>
-                <div className="row p-1 m-2" style={ { "width": "100%", "height": "200px", "border": "1px gray solid" } }>
+                <div className="row p-1 m-2" style={ { "width": "100%", "height": "200px", "background": "whitesmoke" } }>
                     <div className="col-4">
                         { this.displayPicture( this.state.dishPicture ) }
                     </div>

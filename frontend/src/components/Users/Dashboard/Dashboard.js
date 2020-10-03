@@ -75,15 +75,15 @@ export class Dashboard extends Component {
 
             <div>
                 <div className="row">
-                    <div className="col-2"></div>
-                    <div className="col-7 m-4">
+                    <div className="col-3"></div>
+                    <div className="col-6 m-4">
                         <input type="text" style={ { "width": "700px" } } name="searchInput" onChange={ this.handleSearch } placeholder="Search Restaurants"></input>
                     </div>
                     <div className="col-3"></div>
 
                 </div>
                 <div className="row mt-2">
-                    <div className="col-2">
+                    <div className="col-2" style={ { "padding-top": "20px" } }>
                         <ul style={ { "list-style-type": "none" } }>
                             <li> <h4>Filters : </h4></li>
                             <li><input type="radio" name="filter" value="All" onChange={ this.handleradioChange } /> All</li>

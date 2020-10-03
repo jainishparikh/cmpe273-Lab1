@@ -136,7 +136,7 @@ export class UserProfile extends Component {
 
                         </div>
                         <div className="row">
-                            <div className="col-4"></div>
+                            <div className="col-2"></div>
                             { displayReviews }
                         </div>
 

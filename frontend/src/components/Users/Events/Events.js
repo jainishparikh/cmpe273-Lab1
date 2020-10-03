@@ -107,9 +107,9 @@ export class Events extends Component {
 
                             </div>
                         </div>
-                        <div className="col-4">
-                            <div className="row"><h3>Registered Events</h3></div>
-                            <div className="row">
+                        <div className="col-4" style={ { "padding": "0 15px", "border-left": "1px solid #e6e6e6" } }>
+                            <div className="row" style={ { "padding": "0 15px" } }><h3>Registered Events</h3></div>
+                            <div className="row" style={ { "padding": "0 15px" } }>
                                 { registeredEvents }
                             </div>
                         </div>

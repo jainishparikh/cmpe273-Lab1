@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import cookie from "react-cookies";
 import BACKEND_URL from '../../config/config'
+import yelp_image from '../../images/yelp-login.png'
 
 export class Login extends Component {
     constructor( props ) {
@@ -140,21 +141,23 @@ export class Login extends Component {
         return (
             <div>
 
-                <div className="container" style={ { height: "100vh" } }>
-                    <div className="h-100">
-                        <div className="upper" style={ { height: "30%" } }>
-                        </div>
-                        <div className="lower" style={ { height: "70%" } }>
-                            <div className="col-4">
+                <div className="row" style={ { height: "100vh", "padding": "10%" } }>
 
+                    <div className="col-5" style={ { "paddingLeft": "10%" } }>
+                        <div className="row" style={ { height: "10%" } }>
+                        </div>
+                        <div className="row" style={ { height: "90%" } }>
+
+                            <div className="col-12">
+                                <h4 style={ { "margin": "10px", 'color': 'red' } }>Login to Yelp</h4>
                                 <form onSubmit={ this.handleSubmit } id="Login">
-                                    <div className="role" onChange={ this.handleInputChange }>
-                                        <input type="radio" id='radio-b1' name="type" value='users'
+                                    <div className="role" style={ { "margin": "10px" } } onChange={ this.handleInputChange }>
+                                        <input type="radio" style={ { "margin": "0 5px" } } id='radio-b1' name="type" value='users'
                                         />
-                                        <label>User</label>
-                                        <input type="radio" id='radio-b2' name="type" value='restaurants'
+                                        <label><h5>User</h5></label>
+                                        <input type="radio" style={ { "margin": "0 5px" } } id='radio-b2' name="type" value='restaurants'
                                         />
-                                        <label>Restaurant</label>
+                                        <label><h5>Restaurant</h5></label>
                                     </div>
 
                                     <div className="form-group">
@@ -166,15 +169,29 @@ export class Login extends Component {
                                         <input type="password" className="form-control" name="password" required
                                             placeholder="Enter Password" onChange={ this.handlePasswordChange } />
                                     </div>
-                                    <button type="submit" className="btn btn-primary" onSubmit={ this.handleSubmit }>Login</button>
+                                    <button type="submit" className="btn btn-danger" onSubmit={ this.handleSubmit }>Login</button>
 
                                 </form>
                                 { renderError }
                                 <br></br>
-                                Don't have an account? { <Link to="/signup">Sign Up</Link> }
+                                Don't have an account? { <Link style={ { 'color': 'red' } } to="/signup">Sign Up</Link> }
+                            </div>
+
+                        </div>
+                    </div>
+                    <div className="col-7">
+                        {/* <div className="row" style={ { height: "10%" } }>
+                        </div> */}
+                        <div className="row">
+
+                            <div className="row" style={ { "padding": "5%" } }>
+                                <img src={ yelp_image } style={ { "paddingLeft": "40%" } } width="100%" height="100%" alt="" />
                             </div>
                         </div>
                     </div>
+
+
+
                 </div>
             </div>
         )

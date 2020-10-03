@@ -46,6 +46,11 @@ export class Orders extends Component {
         return (
             <div>
                 <div className="row">
+                    <div className="col-2"></div>
+                    <div className="col-8"><h2>Orders:</h2></div>
+
+                </div>
+                <div className="row">
                     <div className="col-2">
                         <ul style={ { "list-style-type": "none" } }>
                             <li> <h4>Filters : </h4></li>

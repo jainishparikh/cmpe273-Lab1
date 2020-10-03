@@ -43,7 +43,7 @@ export class IndividualOrder extends Component {
         }
         return (
 
-            <img src={ restaurantImagePath } width="200px" height="185px" alt="" />
+            <img src={ restaurantImagePath } width="200px" height="195px" alt="" />
 
         )
     }
@@ -76,11 +76,11 @@ export class IndividualOrder extends Component {
 
         return (
             <div style={ { "padding-top": "20px" } }>
-                <div className="row  m-2" style={ { "width": "100%", "height": "185px", "border": "1px gray solid" } }>
-                    <div className="col-4" style={ { "padding": "0px" } }>
+                <div className="row  m-2" style={ { "padding": "5px", "width": "100%", "height": "200px", "background": "whitesmoke" } }>
+                    <div className="col-2" style={ { "padding": "0px" } }>
                         { this.displayPicture( this.state.restaurantData.profilePicture ) }
                     </div>
-                    <div className='col-3'>
+                    <div className='col-4'>
 
                         <ul style={ { "list-style-type": "none", "padding-left": "0px" } }>
                             <li><h2>{ this.state.restaurantData.name }</h2></li>
@@ -92,7 +92,7 @@ export class IndividualOrder extends Component {
                         </ul>
 
                     </div>
-                    <div className='col-2'>
+                    <div className='col-3'>
 
                         <ul style={ { "list-style-type": "none", "padding-left": "0px" } }>
                             <li><h6>Placed On:</h6></li>
@@ -118,8 +118,8 @@ export class IndividualOrder extends Component {
 
                 </div>
                 <div className="row">
-                    <div className="col-4"></div>
-                    <div className="col-5"> { cancel }</div>
+                    <div className="col-2"></div>
+                    <div className="col-7"> { cancel }</div>
                     <div className="col-3">  <div className="view-details" >
                         <button className="btn btn-danger btn-block" onClick={ this.toggleDetailsPopUp }>View Details  &rarr; </button>
                     </div>
@@ -139,6 +139,7 @@ export class IndividualOrder extends Component {
                                 left: '20%',
                                 right: '20%',
                                 bottom: '20%',
+                                width: "70%",
                                 border: '2px solid #ccc',
                                 background: '#fff',
                                 overflow: 'auto',

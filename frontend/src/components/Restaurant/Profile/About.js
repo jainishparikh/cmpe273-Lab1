@@ -89,7 +89,7 @@ export class RestaurantAbout extends Component {
                 { redirectVar }
                 <div className="container-fluid m-1" style={ { height: "100vh" } }>
                     <div className="row h-100">
-                        <div className="col-3">
+                        <div className="col-3" style={ { "border-right": "1px solid #e6e6e6", "background": "whitesmoke" } }>
                             <div className="profile-info" style={ { height: "80%" } }>
                                 <table style={ { height: "100%" } }>
                                     <tbody>
@@ -116,7 +116,7 @@ export class RestaurantAbout extends Component {
                                 } }>Edit Profile</Link>
                             </div>
                         </div>
-                        <div className="col-9">
+                        <div className="col-9" style={ { "padding-left": "40px" } }>
                             <div className="row">
                                 <h3>Here's What We Offer</h3>
                             </div>
@@ -134,7 +134,7 @@ export class RestaurantAbout extends Component {
                             <div className="row mt-3 mb-3">
 
                                 <div className="add-dish m-2" >
-                                    <button className="btn btn-primary" onClick={ this.toggleDishPopUp }>Add Dish</button>
+                                    <button className="btn btn-danger" onClick={ this.toggleDishPopUp }>Add Dish</button>
                                 </div>
                                 {/* using react-modal for popup to add dish */ }
                                 <Modal isOpen={ this.state.dishPopUp } style={ {
@@ -168,7 +168,7 @@ export class RestaurantAbout extends Component {
 
                             </div>
                             {/* Display dishes */ }
-                            <div className="row">
+                            <div className="row" >
                                 <div className="dishes">
                                     <GetDishes type='restaurants' displayDishes={ this.displayImageStore } />
                                 </div>

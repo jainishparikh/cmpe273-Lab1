@@ -28,7 +28,7 @@ export class IndividualRestaurant extends Component {
     render () {
         return (
             <div style={ { "padding-top": "20px" } }>
-                <div className="row" style={ { "width": "100%", "height": "180px", "border": "1px gray solid" } }>
+                <div className="row" style={ { "width": "100%", "height": "180px", "background": "whitesmoke" } }>
                     <div className="col-4" style={ { "padding-left": "0px" } }>
                         { this.displayPicture( this.props.restaurantData.profilePicture ) }
                     </div>

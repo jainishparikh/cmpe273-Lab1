@@ -4,7 +4,7 @@ export class RegisteredEvents extends Component {
     render () {
         return (
             <div>
-                <div className="container pt-2 pb-2" >
+                <div className="container pt-2 pb-2" style={ { "background": "whitesmoke" } } >
                     <div className="row">
 
                         <div className="col-6">

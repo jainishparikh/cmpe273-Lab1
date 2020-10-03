@@ -52,18 +52,18 @@ export class IndividualDish extends Component {
         let dishOption = null
         if ( this.state.addedToOrder === false ) {
             dishOption = <div className="add-to-order" >
-                <button onClick={ this.addToOrderIndividualDish } className="btn btn-primary">Add to Order</button>
+                <button onClick={ this.addToOrderIndividualDish } className="btn btn-danger">Add to Order</button>
             </div>
         } else {
             dishOption = <div className="add-to-order" >
-                <button onClick={ this.removeFromOrderIndividualDish } className="btn btn-primary">Remove</button>
+                <button onClick={ this.removeFromOrderIndividualDish } className="btn btn-danger">Remove</button>
             </div>
         }
 
 
         return (
             <div>
-                <div className="row p-1 m-2" style={ { "width": "100%", "height": "200px", "border": "1px gray solid" } }>
+                <div className="row p-1 m-3" style={ { "width": "100%", "height": "200px", "background": "whitesmoke" } }>
                     <div className="col-4">
                         { this.displayPicture( this.state.dishPicture ) }
                     </div>

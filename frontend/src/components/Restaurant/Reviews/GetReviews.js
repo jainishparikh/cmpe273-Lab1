@@ -49,7 +49,7 @@ export class GetReviews extends Component {
             <div>
                 <div className="row">
                     <div className="col-4"></div>
-                    <div className="col-8"><h2>Reviews by you </h2></div>
+                    <div className="col-8"><h2>Reviews </h2></div>
 
                 </div>
                 { displayReview }

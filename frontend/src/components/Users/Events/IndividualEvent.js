@@ -30,8 +30,8 @@ export class IndividualEvent extends Component {
         return (
             <div>
                 <div className="container pt-2 pb-2" >
-                    <div className="row">
-                        <div className="col-8">
+                    <div className="row" style={ { "background": "whitesmoke" } }>
+                        <div className="col-10">
                             <div className="row">
 
                                 <div className="col-8">
@@ -43,7 +43,7 @@ export class IndividualEvent extends Component {
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="col-8">
+                                <div className="col-8" style={ { "color": "blue" } }>
                                     { this.props.eventData.Hashtags }
                                 </div>
                                 <div className="col-4">
@@ -60,9 +60,9 @@ export class IndividualEvent extends Component {
 
                             </div>
                         </div>
-                        <div className="col-4">
+                        <div className="col-2">
                             <div className="post-event m-2" >
-                                <button className="btn btn-primary" onClick={ this.toggleRegistrationsPopUp }>Register</button>
+                                <button className="btn btn-danger" onClick={ this.toggleRegistrationsPopUp }>Register</button>
                             </div>
                             {/* using react-modal for popup to add dish */ }
                             <Modal isOpen={ this.state.registrationsPopUp } style={ {

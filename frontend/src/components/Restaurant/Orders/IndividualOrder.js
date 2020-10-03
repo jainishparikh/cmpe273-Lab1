@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import BACKEND_URL from '../../../config/config';
 import Modal from 'react-modal';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import profile_picture from '../../../images/profile.png';
 
 export class IndividualOrder extends Component {
     constructor( props ) {
@@ -74,7 +75,12 @@ export class IndividualOrder extends Component {
     }
 
     displayPicture = ( name ) => {
-        var dishImagePath = BACKEND_URL + "/images/profilepics/" + name
+        if ( name ) {
+            var dishImagePath = BACKEND_URL + "/images/profilepics/" + name
+        } else {
+            var dishImagePath = profile_picture
+        }
+
         return (
 
             <img src={ dishImagePath } width="200px" height="185px" alt="" />
@@ -124,7 +130,7 @@ export class IndividualOrder extends Component {
         }
         return (
             <div style={ { "padding-top": "20px" } }>
-                <div className="row  m-2" style={ { "width": "100%", "height": "235px", "border": "1px gray solid" } }>
+                <div className="row  m-2" style={ { "width": "100%", "height": "190px", "background": "whitesmoke" } }>
                     <div className="col-4" style={ { "padding": "0px" } }>
                         { this.displayPicture( this.state.userData.profilePicture ) }
                     </div>
