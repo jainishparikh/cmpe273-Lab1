@@ -44,7 +44,7 @@ export class Events extends Component {
 
     render () {
         var redirectVar = null;
-        if ( !cookie.load( "auth" ) ) {
+        if ( !( cookie.load( "auth" ) && cookie.load( "type" ) === "restaurants" ) ) {
             redirectVar = <Redirect to="/login" />
         }
         let details = this.state.Events.map( ( event, index ) => {

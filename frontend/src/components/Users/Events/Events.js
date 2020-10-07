@@ -60,7 +60,7 @@ export class Events extends Component {
 
     render () {
         var redirectVar = null;
-        if ( !cookie.load( "auth" ) ) {
+        if ( !( cookie.load( "auth" ) && cookie.load( "type" ) === "users" ) ) {
             redirectVar = <Redirect to="/login" />
         }
         let filteredEvents = this.state.Events.filter( ( event ) => {

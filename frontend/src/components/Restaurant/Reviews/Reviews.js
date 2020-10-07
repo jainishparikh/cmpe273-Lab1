@@ -30,7 +30,7 @@ export class Reviews extends Component {
     }
     render () {
         var redirectVar = null;
-        if ( !cookie.load( "auth" ) ) {
+        if ( !( cookie.load( "auth" ) && cookie.load( "type" ) === "restaurants" ) ) {
             redirectVar = <Redirect to="/login" />
         }
         let details = this.state.Reviews.map( ( review ) => {

@@ -102,7 +102,7 @@ export class RestaurantProfile extends Component {
 
     render () {
         var redirectVar = null;
-        if ( !cookie.load( "auth" ) ) {
+        if ( !( cookie.load( "auth" ) && cookie.load( "type" ) === "users" ) ) {
             redirectVar = <Redirect to="/login" />
         }
 

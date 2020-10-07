@@ -3,6 +3,7 @@ import cookie from "react-cookies";
 import axios from 'axios';
 import BACKEND_URL from '../../../config/config';
 import IndividualOrder from "./IndividualOrder";
+import { Redirect } from 'react-router';
 
 export class Orders extends Component {
     constructor( props ) {
@@ -38,6 +39,10 @@ export class Orders extends Component {
         window.location.reload()
     }
     render () {
+        let redirectVar = null
+        if ( !( cookie.load( "auth" ) && cookie.load( "type" ) === "restaurants" ) ) {
+            redirectVar = <Redirect to="/login" />
+        }
         let filteredOrders = this.state.Orders.filter( order => this.state.orderStatusFilter === "All" || order.orderStatus === this.state.orderStatusFilter )
 
         let displayOrders = filteredOrders.map( order => {
@@ -45,6 +50,7 @@ export class Orders extends Component {
         } )
         return (
             <div>
+                { redirectVar }
                 <div className="row">
                     <div className="col-2"></div>
                     <div className="col-8"><h2>Orders:</h2></div>

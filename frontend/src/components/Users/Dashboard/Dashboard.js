@@ -54,7 +54,7 @@ export class Dashboard extends Component {
 
 
     render () {
-        if ( !cookie.load( 'auth' ) ) {
+        if ( !( cookie.load( "auth" ) && cookie.load( "type" ) === "users" ) ) {
             return <Redirect to='/login' />
         }
         let searchedRestaurants = this.state.Restaurants.filter( ( restaurant ) => {

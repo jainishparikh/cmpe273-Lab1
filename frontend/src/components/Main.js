@@ -12,7 +12,6 @@ import UserEvents from './Users/Events/Events';
 import RestaurantProfile from './Users/Profile/RestaurantProfile';
 import UserOrders from './Users/Orders/Orders';
 //restaurant
-import RestaurantDashboard from './Restaurant/Dashboard';
 import RestaurantAbout from "./Restaurant/Profile/About";
 import EditRestaurantProfile from "./Restaurant/Profile/Profile";
 import RestaurantReviews from "./Restaurant/Reviews/Reviews";
@@ -36,7 +35,6 @@ export class Main extends Component {
                 <Route path='/users/restaurantprofiles/:restaurantEmail/:restaurantID' component={ RestaurantProfile } />
                 <Route path='/users/orders' component={ UserOrders } />
 
-                <Route path='/restaurants/dashboard' component={ RestaurantDashboard } />
                 <Route path='/restaurants/about' component={ RestaurantAbout } />
                 <Route path='/restaurants/editprofile' component={ EditRestaurantProfile } />
                 <Route path='/restaurants/reviews' component={ RestaurantReviews } />

@@ -72,9 +72,9 @@ export class UserAbout extends Component {
 
     render () {
         var redirectVar = null;
-        // if ( !cookie.load( "auth" ) ) {
-        //     redirectVar = <Redirect to="/login" />
-        // }
+        if ( !( cookie.load( "auth" ) && cookie.load( "type" ) === "users" ) ) {
+            redirectVar = <Redirect to="/login" />
+        }
 
         return (
 

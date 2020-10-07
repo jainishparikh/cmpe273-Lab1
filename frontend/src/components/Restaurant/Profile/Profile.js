@@ -165,7 +165,7 @@ export class Profile extends Component {
 
     render () {
         var redirectVar = null;
-        if ( !cookie.load( "auth" ) ) {
+        if ( !( cookie.load( "auth" ) && cookie.load( "type" ) === "restaurants" ) ) {
             redirectVar = <Redirect to="/login" />
         }
         let renderError = null

@@ -132,7 +132,7 @@ export class Login extends Component {
             return <Redirect to='/users/dashboard' />
         }
         else if ( cookie.load( 'auth' ) && cookie.load( 'type' ) === 'restaurants' ) {
-            return <Redirect to='/restautants/dashboard' />
+            return <Redirect to='/restaurants/about' />
         }
         let renderError = null
         if ( this.state.error ) {
