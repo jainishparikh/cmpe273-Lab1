@@ -6,8 +6,8 @@ export class Maps extends Component {
         super( props )
         this.state = {
             center: {
-                lat: 37.33,
-                lng: 121.88,
+                lat: 33.33,
+                lng: 122.90,
             },
         }
 
@@ -32,7 +32,7 @@ export class Maps extends Component {
                     google={ this.props.google }
                     zoom={ 9 }
                     className={ 'map' }
-                    initialCenter={ { lat: 37.77, lng: 238.41 } }
+                    initialCenter={ { lat: 37.33, lng: -121.89 } }
 
                 >
                     { locations }

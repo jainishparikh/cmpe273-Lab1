@@ -18,6 +18,8 @@ export class IndividualOrder extends Component {
 
     componentDidMount () {
         var restaurantID = this.props.orderData.ref_restaurantID
+        console.log( "orderData", this.props.orderData )
+        console.log( "resid", restaurantID )
         return axios.get( BACKEND_URL + '/restaurants/aboutbyID/' + restaurantID ).then( response => {
 
             this.setState( {

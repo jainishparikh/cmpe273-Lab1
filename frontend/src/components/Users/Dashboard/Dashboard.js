@@ -58,7 +58,7 @@ export class Dashboard extends Component {
             return <Redirect to='/login' />
         }
         let searchedRestaurants = this.state.Restaurants.filter( ( restaurant ) => {
-            return restaurant.name.toLowerCase().includes( this.state.searchInput.toLowerCase() )
+            return restaurant.name.toLowerCase().includes( this.state.searchInput.toLowerCase() ) || restaurant.location.toLowerCase().includes( this.state.searchInput.toLowerCase() ) || restaurant.restaurantType.toLowerCase().includes( this.state.searchInput.toLowerCase() )
         } )
 
         let filteredRestaurants = searchedRestaurants.filter( ( restaurant ) => {

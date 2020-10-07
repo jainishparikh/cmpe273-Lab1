@@ -47,13 +47,14 @@ export class Orders extends Component {
         }
 
         let filteredOrders = this.state.Orders.filter( order => this.state.orderStatusFilter === "All" || order.orderStatus === this.state.orderStatusFilter )
-        console.log( "filtered", filteredOrders )
+        // console.log( "filtered", filteredOrders )
         let sortedOrders = filteredOrders.sort( ( a, b ) => b.orderID - a.orderID )
-        console.log( "sorted", sortedOrders )
-        let order = sortedOrders.map( order => {
+        // console.log( "sorted", sortedOrders )
+        let displayOrder = sortedOrders.map( ( order, index ) => {
+            console.log( "in orders", order.orderID )
             return (
                 <div>
-                    <IndividualOrder orderData={ order } />
+                    <IndividualOrder key={ order.orderID } orderData={ order } />
                 </div>
             )
         } )
@@ -87,7 +88,7 @@ export class Orders extends Component {
 
                         </ul>
                     </div>
-                    <div className="col-8">{ order }</div>
+                    <div className="col-8">{ displayOrder }</div>
                     <div className="col-2"></div>
                 </div>
 

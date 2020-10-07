@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import Signup from './Signup/Signup';
 import Navbar from './LandingPage/Navbar';
+import Home from './LandingPage/home';
 import Login from './Login/Login';
 import Logout from './Login/Logout';
 //User
@@ -24,6 +25,7 @@ export class Main extends Component {
         return (
             <div>
                 <Route path='/' component={ Navbar } />
+                <Route exact path='/' component={ Home } />
                 <Route path='/signup' component={ Signup } />
                 <Route path='/login' component={ Login } />
                 <Route path='/logout' component={ Logout } />
