@@ -16,15 +16,19 @@ export class Events extends Component {
     }
 
     componentDidMount () {
-        var restaurantID = cookie.load( 'id' )
-        axios.get( BACKEND_URL + '/events/restaurants/' + restaurantID ).then( response => {
-            response.data.map( ( event ) => {
-                this.setState( {
-                    Events: [ ...this.state.Events, event ]
-                } )
+        // var restaurantID = cookie.load( 'id' )
+        var restaurantID = 13
+        return axios.get( BACKEND_URL + '/events/restaurants/' + restaurantID ).then( response => {
+            // response.data.map( ( event ) => {
+            //     this.setState( {
+            //         Events: [ ...this.state.Events, event ]
+            //     } )
 
+            // } )
+            this.setState( {
+                Events: response.data
             } )
-            console.log( this.state )
+            // console.log( this.state )
 
         } ).catch( error => {
             console.log( "Error in fetching restaurant events: ", error );
@@ -43,9 +47,9 @@ export class Events extends Component {
         if ( !cookie.load( "auth" ) ) {
             redirectVar = <Redirect to="/login" />
         }
-        let details = this.state.Events.map( ( event ) => {
+        let details = this.state.Events.map( ( event, index ) => {
             return (
-                <IndividualEvent eventData={ event } />
+                <IndividualEvent key={ index } eventData={ event } />
             )
         } )
         return (

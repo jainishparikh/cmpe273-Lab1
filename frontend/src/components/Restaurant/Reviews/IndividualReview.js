@@ -23,19 +23,19 @@ export class IndividualDish extends Component {
 
         return (
             <div style={ { "padding-top": "20px" } }>
-                <div style={ { border: "1px solid gray", "padding-left": "10px" } }>
+                <div style={ { "background": "whitesmoke", "padding-left": "10px" } }>
                     <div className="row">
-                        <div className="col-8"><h2>{ this.props.reviewData.headline }</h2></div>
-
+                        <div className="col-8"><h5>Headline:</h5> { this.props.reviewData.headline }</div>
                         <div className="col-4">{ this.props.reviewData.date }</div>
                     </div>
                     <div className="row">
+                        <div className="col-4"><h5>Ratings:</h5> { this.props.reviewData.ratings }</div>
 
-                        <div className="col-8">{ this.props.reviewData.ratings }</div>
+
                     </div>
                     <div className="row">
-                        <div className="col-8">{ this.props.reviewData.reviewText }</div>
-                        <div className="col-4">- <h6>{ this.props.reviewData.reviewerName }</h6></div>
+                        <div className="col-8"><h5>Review:</h5>{ this.props.reviewData.reviewText }</div>
+                        <div className="col-4"><h6>Author- { this.props.reviewData.reviewerName }</h6></div>
                     </div>
 
                 </div>

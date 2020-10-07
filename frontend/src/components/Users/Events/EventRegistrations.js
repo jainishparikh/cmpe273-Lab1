@@ -62,21 +62,21 @@ export class EventRegistrations extends Component {
             <div>
                 <div className="container">
                     <div className="row">
-                        <div className="col-4">Name: { this.state.eventName }</div>
-                        <div className="col-4">Hashtags: { this.state.Hashtags }</div>
+                        <div className="col-4"><h6>Name:</h6> { this.state.eventName }</div>
+                        <div className="col-4"><h6>Hashtags:</h6> { this.state.Hashtags }</div>
 
                     </div>
                     <div className="row">
-                        <div className="col-4">When: { this.state.eventTime }</div>
-                        <div className="col-4">{ this.state.eventDate }</div>
+                        <div className="col-4"><h6>When:</h6> { this.state.eventTime }, { this.state.eventDate }</div>
+                        <div className="col-4"></div>
 
                     </div>
                     <div className="row">
-                        <div className="col-4">Where: { this.state.eventLocation }</div>
+                        <div className="col-4"><h6>Where:</h6> { this.state.eventLocation }</div>
 
                     </div>
                     <div className="row">
-                        <div className="col-8">Description: { this.state.eventDescription }</div>
+                        <div className="col-8"><h6>Description:</h6> { this.state.eventDescription }</div>
 
                     </div>
 

@@ -28,18 +28,19 @@ export class GetReviews extends Component {
         let displayReview = this.state.Reviews.map( review => {
             return (
 
-                <div style={ { border: "1px solid gray", "padding-left": "10px", "marginTop": "10px" } }>
+                <div style={ { "background": "whitesmoke", "padding-left": "10px", "marginTop": "10px" } }>
                     <div className="row">
                         <div className="col-4"><h2>{ review.restaurantName }</h2></div>
-                        <div className="col-4">{ review.ratings }</div>
-                        <div className="col-4">{ review.date }</div>
+                        <div className="col-6">{ review.ratings }</div>
+                        <div className="col-2">{ review.date }</div>
                     </div>
                     <div className="row">
-                        <div className="col-8"><h4>{ review.headline }</h4></div>
+                        <div className="col-8"><h5>Headline:</h5></div>
+                        <div className="col-8">{ review.headline }</div>
 
                     </div>
                     <div className="row">
-
+                        <div className="col-8"><h5>Review:</h5></div>
                         <div className="col-8">{ review.reviewText }</div>
                     </div>
                 </div>

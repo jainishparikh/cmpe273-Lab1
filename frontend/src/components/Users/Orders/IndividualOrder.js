@@ -18,7 +18,8 @@ export class IndividualOrder extends Component {
 
     componentDidMount () {
         var restaurantID = this.props.orderData.ref_restaurantID
-        axios.get( BACKEND_URL + '/restaurants/aboutbyID/' + restaurantID ).then( response => {
+        return axios.get( BACKEND_URL + '/restaurants/aboutbyID/' + restaurantID ).then( response => {
+
             this.setState( {
                 restaurantData: response.data
             } )
@@ -77,10 +78,10 @@ export class IndividualOrder extends Component {
         return (
             <div style={ { "padding-top": "20px" } }>
                 <div className="row  m-2" style={ { "padding": "5px", "width": "100%", "height": "200px", "background": "whitesmoke" } }>
-                    <div className="col-2" style={ { "padding": "0px" } }>
+                    <div className="col-3" style={ { "padding": "0px" } }>
                         { this.displayPicture( this.state.restaurantData.profilePicture ) }
                     </div>
-                    <div className='col-4'>
+                    <div className='col-3'>
 
                         <ul style={ { "list-style-type": "none", "padding-left": "0px" } }>
                             <li><h2>{ this.state.restaurantData.name }</h2></li>
@@ -117,9 +118,9 @@ export class IndividualOrder extends Component {
                     </div>
 
                 </div>
-                <div className="row">
-                    <div className="col-2"></div>
-                    <div className="col-7"> { cancel }</div>
+                <div className="row" >
+                    <div className="col-3"></div>
+                    <div className="col-6"> { cancel }</div>
                     <div className="col-3">  <div className="view-details" >
                         <button className="btn btn-danger btn-block" onClick={ this.toggleDetailsPopUp }>View Details  &rarr; </button>
                     </div>

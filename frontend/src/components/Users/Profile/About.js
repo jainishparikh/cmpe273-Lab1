@@ -29,8 +29,10 @@ export class UserAbout extends Component {
 
     }
     componentDidMount () {
-        let email = cookie.load( "email" )
-        axios.get( BACKEND_URL + '/users/about/' + email ).then( ( response ) => {
+        // let email = cookie.load( "email" )
+        let email = "user2@gmail.com"
+        return axios.get( BACKEND_URL + '/users/about/' + email ).then( ( response ) => {
+            // console.log( response )
             if ( response.status === 200 ) {
                 console.log( "got data" )
                 let imagePath = BACKEND_URL + "/images/profilepics/" + response.data.profilePicture
@@ -55,10 +57,10 @@ export class UserAbout extends Component {
                     profileImagePath: imagePath
                 } )
             }
-            console.log( this.state );
+            // console.log( this.state );
 
         } ).catch( ( err ) => {
-            console.log( " error getting user data" )
+            console.log( " error getting user data", err )
             this.setState( {
                 error: true
             } )
@@ -70,9 +72,9 @@ export class UserAbout extends Component {
 
     render () {
         var redirectVar = null;
-        if ( !cookie.load( "auth" ) ) {
-            redirectVar = <Redirect to="/login" />
-        }
+        // if ( !cookie.load( "auth" ) ) {
+        //     redirectVar = <Redirect to="/login" />
+        // }
 
         return (
 
@@ -80,20 +82,20 @@ export class UserAbout extends Component {
                 { redirectVar }
                 <div className="container-fluid">
                     <div className="container-fluid" style={ { height: "100vh" } }>
-                        <div className="row mt-3 mb-3" style={ { height: "30%", background: "whitesmoke" } }>
+                        <div className="row mt-3 mb-3" style={ { height: "35%" } }>
                             {/* profile picture */ }
                             <div className="col-2">
-                                <img src={ this.state.profileImagePath } width="102%" height="100%" alt="" />
+                                <img src={ this.state.profileImagePath } width="100%" height="90%" alt="" />
                             </div>
                             {/* profile display */ }
                             <div className="col-8" >
-                                <div className="row pt-4">
+                                <div className="row pt-4" style={ { background: "whitesmoke" } }>
                                     <div className="col-8">
                                         <ul style={ { "list-style-type": "none" } }>
                                             <li><h2>{ this.state.name }</h2></li>
                                             <li>&nbsp;</li>
                                             <li><h5>{ this.state.city }, { this.state.state }</h5></li>
-                                            <li>{ this.state.thingsILove }&nbsp;</li>
+                                            <li>{ this.state.email }&nbsp;</li>
                                             <li>&nbsp;</li>
                                             <li>&nbsp;</li>
                                             <li>{ this.state.headline }&nbsp;</li>
@@ -121,9 +123,9 @@ export class UserAbout extends Component {
 
                         </div>
 
-                        <div className="row" style={ { height: "70%" } }>
+                        <div className="row" style={ { height: "60%" } }>
                             {/* edit-profile */ }
-                            <div className="col-2" >
+                            <div className="col-2" style={ { "marginTop": "20px" } } >
                                 <Link className="btn btn-primary" to={ {
                                     pathname: "/users/editprofile", state: {
                                         userData: this.state

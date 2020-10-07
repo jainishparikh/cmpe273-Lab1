@@ -42,6 +42,11 @@ export class Reviews extends Component {
             <div>
                 { redirectVar }
                 <div className="container-fluid m-1" style={ { height: "100vh" } }>
+                    <div className="row">
+                        <div className='col-5'></div>
+                        <div className='col-7'><h5>Reviews by Customers </h5></div>
+
+                    </div>
                     <div className="row mt-10" >
                         <div className='col-1'></div>
                         <div className='col-10'>{ details }</div>
