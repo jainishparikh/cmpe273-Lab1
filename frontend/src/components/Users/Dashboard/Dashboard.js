@@ -20,17 +20,35 @@ export class Dashboard extends Component {
 
     componentDidMount () {
         // getting all restaurants
-        axios.get( BACKEND_URL + '/restaurants/all' ).then( response => {
-            console.log( "got all restaurants", response.data )
-            response.data.map( ( restaurant ) => {
-                this.setState( {
-                    Restaurants: [ ...this.state.Restaurants, restaurant ],
-                    // searchInput: "",
+        axios.get( BACKEND_URL + '/restaurants/all' ).then( responseRestaurants => {
+            // console.log( "got all restaurants", response.data )
+            axios.get( BACKEND_URL + '/restaurants/dishes' ).then( responseDishes => {
 
+                let tempMap = {}
+                let resID = ""
+                responseDishes.data.map( dish => {
+                    resID = dish.FK_dishes_restaurants
+                    if ( resID in tempMap ) {
+                        tempMap[ resID ] += dish.dishName
+                    } else {
+                        tempMap[ dish.FK_dishes_restaurants ] = dish.dishName
+                    }
                 } )
 
+                responseRestaurants.data.map( ( restaurant ) => {
+                    restaurant[ "dishNames" ] = tempMap[ restaurant.restaurantID ]
+                    this.setState( {
+                        Restaurants: [ ...this.state.Restaurants, restaurant ],
+                        // searchInput: "",
+
+                    } )
+
+                } )
+                console.log( this.state )
+            } ).catch( error => {
+                console.log( "Error fetching dishes", error )
             } )
-            console.log( this.state )
+
 
         } ).catch( error => {
             console.log( "Error in fetching restaurants : ", error );
@@ -58,7 +76,7 @@ export class Dashboard extends Component {
             return <Redirect to='/login' />
         }
         let searchedRestaurants = this.state.Restaurants.filter( ( restaurant ) => {
-            return restaurant.name.toLowerCase().includes( this.state.searchInput.toLowerCase() ) || restaurant.location.toLowerCase().includes( this.state.searchInput.toLowerCase() ) || restaurant.restaurantType.toLowerCase().includes( this.state.searchInput.toLowerCase() )
+            return restaurant.name.toLowerCase().includes( this.state.searchInput.toLowerCase() ) || restaurant.dishNames.toLowerCase().includes( this.state.searchInput.toLowerCase() ) || restaurant.restaurantType.toLowerCase().includes( this.state.searchInput.toLowerCase() )
         } )
 
         let filteredRestaurants = searchedRestaurants.filter( ( restaurant ) => {

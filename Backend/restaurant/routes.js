@@ -199,8 +199,28 @@ router.post( '/uploadpicture', ( req, res ) => {
     } )
 } );
 
+//get all dishes
+router.get( '/dishes', ( req, res ) => {
+    // var restaurantID = req.params.restaurantID;
+    var sql = `select dishName, FK_dishes_restaurants from dishes`;
+    connection.query( sql, ( err, results ) => {
+        if ( err ) {
+            console.log( err );
+            res.end( "Error:", err );
+        } else {
+            // var out = []
+            // Object.keys( results ).forEach( ( dish ) => {
+            //     out.push( JSON.stringify( results[ dish ] ) )
+            // } )
+            console.log( JSON.stringify( results ) )
+            res.status( 200 ).send( JSON.stringify( results ) );
+        }
 
-//get dishes
+    } );
+} );
+
+
+//get dishes by restaurant
 router.get( '/dishes/:restaurantID', ( req, res ) => {
     var restaurantID = req.params.restaurantID;
     var sql = `select * from dishes where FK_dishes_restaurants="${ restaurantID }"`;

@@ -18,7 +18,7 @@ export class Maps extends Component {
 
     render () {
         let locations = this.props.restaurantData.map( restaurant => {
-            console.log( "restaurant", restaurant.name, restaurant.latitude, restaurant.longitude )
+            // console.log( "restaurant", restaurant.name, restaurant.latitude, restaurant.longitude )
 
             return (
                 <Marker name={ restaurant.name } position={ { lat: restaurant.latitude, lng: restaurant.longitude } } />
