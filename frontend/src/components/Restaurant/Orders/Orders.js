@@ -61,7 +61,7 @@ export class Orders extends Component {
                         <ul style={ { "list-style-type": "none" } }>
                             <li> <h4>Filters : </h4></li>
                             <li><input type="radio" name="filter" value="All" onChange={ this.handleradioChange } defaultChecked /> All</li>
-                            <li> <input type="radio" name="filter" value="Order Received" onChange={ this.handleradioChange } /> Order Received</li>
+                            <li> <input type="radio" name="filter" value="Order Received" onChange={ this.handleradioChange } /> New Orders</li>
                             <li>  <input type="radio" name="filter" value="Preparing" onChange={ this.handleradioChange } /> Preparing</li>
                             <li>  <input type="radio" name="filter" value="On The Way" onChange={ this.handleradioChange } /> On The Way</li>
                             <li>  <input type="radio" name="filter" value="Delivered" onChange={ this.handleradioChange } /> Delivered</li>

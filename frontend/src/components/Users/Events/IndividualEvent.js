@@ -89,7 +89,7 @@ export class IndividualEvent extends Component {
                                     padding: '20px'
                                 }
                             } } >
-                                <EventRegistrations eventData={ this.state } closePopUp={ this.toggleRegistrationsPopUp } />
+                                <EventRegistrations eventData={ this.props.eventData } closePopUp={ this.toggleRegistrationsPopUp } />
                             </Modal>
 
                         </div>

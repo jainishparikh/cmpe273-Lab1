@@ -29,8 +29,8 @@ export class UserAbout extends Component {
 
     }
     componentDidMount () {
-        // let email = cookie.load( "email" )
-        let email = "user2@gmail.com"
+        let email = cookie.load( "email" )
+        // let email = "user2@gmail.com"
         return axios.get( BACKEND_URL + '/users/about/' + email ).then( ( response ) => {
             // console.log( response )
             if ( response.status === 200 ) {

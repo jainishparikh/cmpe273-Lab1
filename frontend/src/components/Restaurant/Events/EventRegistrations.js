@@ -34,7 +34,7 @@ export class EventRegistrations extends Component {
                     <td style={ { "padding": "10px", "border": "1px solid gray" } } >{ attendee.userName }</td>
                     <td style={ { "padding": "10px", "border": "1px solid gray" } }>{ attendee.userEmail }</td>
                     <td style={ { "padding": "10px", "border": "1px solid gray" } }>
-                        <Link className="btn btn-primary" to={ `/restaurants/userprofiles/${ attendee.userEmail }` } >
+                        <Link className="btn btn-primary" to={ `/restaurants/userprofiles/${ attendee.userEmail }/${ attendee.ref_userID }` } >
                             View Profile
                     </Link>
                     </td>
